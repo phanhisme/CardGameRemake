@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0a2590f531e2d4eb5e28b2a37f81a7, type: 3}
+  m_Name: 02
+  m_EditorClassIdentifier: 
+  sentences:
+  - text: Hello World
+    speaker: {fileID: 11400000, guid: 3a992c36a2822434385da2e12e2d47c4, type: 2}
+  - text: Munching
+    speaker: {fileID: 11400000, guid: 8713279635cc76043864f6016ccce9f4, type: 2}
+  - text: Kekekeke
+    speaker: {fileID: 11400000, guid: 3a992c36a2822434385da2e12e2d47c4, type: 2}
+  background: {fileID: 0}
+  nextScene: {fileID: 11400000, guid: 4c816df4a7411b74c993bb610e45f9db, type: 2}

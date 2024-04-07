@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0a2590f531e2d4eb5e28b2a37f81a7, type: 3}
+  m_Name: 01_ButterflyForest
+  m_EditorClassIdentifier: 
+  sentences:
+  - text: Omg
+    speaker: {fileID: 11400000, guid: 3a992c36a2822434385da2e12e2d47c4, type: 2}
+  - text: What are you so surprised about lol
+    speaker: {fileID: 11400000, guid: 8713279635cc76043864f6016ccce9f4, type: 2}
+  background: {fileID: 21300000, guid: bf682d3d86c3b994cb4df96033281d3a, type: 3}
+  nextScene: {fileID: 11400000, guid: c72cda2b038b0ed42b8f7710398985b7, type: 2}
