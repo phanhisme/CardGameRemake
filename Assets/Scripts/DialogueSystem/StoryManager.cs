@@ -17,18 +17,18 @@ public class StoryManager : MonoBehaviour
 
     void Start()
     {
+        dialoguePanel = this.GetComponent<DisplayText>();
+
         if (currentScene is StoryScene)
         {
             StoryScene storyScene = currentScene as StoryScene;
-
-            dialoguePanel = this.GetComponent<DisplayText>();
             dialoguePanel.PlayScene(storyScene);
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
         {
             if (state == State.IDLE && dialoguePanel.IsCompleted())
             {
@@ -37,7 +37,10 @@ public class StoryManager : MonoBehaviour
                     PlayScene((currentScene as StoryScene).nextScene);
                 }
 
-                dialoguePanel.PlayNextScene();
+                else
+                {
+                    dialoguePanel.PlayNextScene();
+                }
             }
         }
     }

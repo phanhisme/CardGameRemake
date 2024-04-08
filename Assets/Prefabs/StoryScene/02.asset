@@ -19,5 +19,5 @@ MonoBehaviour:
     speaker: {fileID: 11400000, guid: 8713279635cc76043864f6016ccce9f4, type: 2}
   - text: Kekekeke
     speaker: {fileID: 11400000, guid: 3a992c36a2822434385da2e12e2d47c4, type: 2}
-  background: {fileID: 0}
+  background: {fileID: 21300000, guid: 10bad90e9587670429e4ae74bdb86a64, type: 3}
   nextScene: {fileID: 11400000, guid: 4c816df4a7411b74c993bb610e45f9db, type: 2}

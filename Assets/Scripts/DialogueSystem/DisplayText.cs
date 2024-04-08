@@ -9,7 +9,7 @@ public class DisplayText : MonoBehaviour
     public TextMeshProUGUI speakerName;
 
     private int sentenceIndex = -1;
-    public StoryScene currentScene;
+    private StoryScene currentScene;
 
     private State state = State.COMPLETED;
 
@@ -28,6 +28,8 @@ public class DisplayText : MonoBehaviour
 
     public void HideDialogue()
     {
+        //hide dialogue to chose the next scene (through option)
+
         if (!isHidden)
         {
             anim.SetTrigger("Hide");
@@ -37,12 +39,14 @@ public class DisplayText : MonoBehaviour
 
     public void ShowDialogue()
     {
+        //show dialogue
         anim.SetTrigger("Show");
         isHidden = false;
     }
 
     public void ClearText()
     {
+        //clear everything
         dialogueText.text = "";
     }
 
@@ -50,11 +54,15 @@ public class DisplayText : MonoBehaviour
     {
         currentScene = scene;
         sentenceIndex = -1;
+        PlayNextScene();
     }
 
     public void PlayNextScene()
     {
+        //type word by word effect
         StartCoroutine(TypeText(currentScene.sentences[++sentenceIndex].text));
+
+        //set & change speaker name
         speakerName.text = currentScene.sentences[sentenceIndex].speaker.speakerName;
         //speakerName.color = currentScene.sentences[sentenceIndex].speaker.textColor;
     }
@@ -66,6 +74,7 @@ public class DisplayText : MonoBehaviour
 
     public bool IsLastSentence()
     {
+        //check if this is the last sentence of the scene
         return sentenceIndex + 1 == currentScene.sentences.Count;
     }
 

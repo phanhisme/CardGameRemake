@@ -4,34 +4,45 @@ using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
-    public bool dabriaChosen = false;
-    public bool daellaChosen = false;
-    public bool asifChosen = false;
-    public bool amiasChosen = false;
-    public bool maeveChosen = false;
+    private ChoseCharacter chosenChar;
+    
+    private bool dabriaChosen = false;
+    private bool daellaChosen = false;
+    private bool asifChosen = false;
+    private bool amiasChosen = false;
+    private bool maeveChosen = false;
 
+    private void Start()
+    {
+        chosenChar = FindObjectOfType<ChoseCharacter>();
+    }
     public void DabriaChosen()
     {
         dabriaChosen = true;
+        Debug.Log("Chosen: Dabria. Starting game with " + chosenChar.charName);
     }
 
     public void DaellaChosen()
     {
         daellaChosen = true;
+        Debug.Log("Chosen: Daella. Starting game with " + chosenChar.charName);
     }
 
     public void AsifChosen()
     {
         asifChosen = true;
+        Debug.Log("Chosen: Asif. Starting game with " + chosenChar.charName);
     }
 
     public void AmiasChosen()
     {
         amiasChosen = true;
+        Debug.Log("Chosen: Amias. Starting game with " + chosenChar.charName);
     }
 
     public void MaeveChosen()
     {
         maeveChosen = true;
+        Debug.Log("Chosen: Maeve. Starting game with " + chosenChar.charName);
     }
 }

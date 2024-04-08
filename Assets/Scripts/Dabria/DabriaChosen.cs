@@ -27,7 +27,8 @@ public class DabriaChosen : MonoBehaviour
         //dabRelic.GetComponent<DabriaStarterRelic>();
         //gm = FindObjectOfType<GameManager>();
 
-        if (charScript.dabriaChosen)
+        int i = 1;
+        if (i == 1) //dabria is chosen
         {
             //continue
             //recieve relic - enable a passive skill through script

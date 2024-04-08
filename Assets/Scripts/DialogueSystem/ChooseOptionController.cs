@@ -39,7 +39,7 @@ public class ChooseOptionController : MonoBehaviour
         }
     }
 
-    public void PerformChoose(StoryScene scene)
+    public void PerformChoose(GameScene scene)
     {
         storyManager.PlayScene(scene);
         anim.SetTrigger("Hide");

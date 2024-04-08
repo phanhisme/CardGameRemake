@@ -3,7 +3,7 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName ="NewStoryScene",menuName ="New Story Scene")]
 [System.Serializable]
-public class StoryScene : ScriptableObject
+public class StoryScene : GameScene
 {
     public List<Sentence> sentences;
 
