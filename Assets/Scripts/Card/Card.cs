@@ -13,4 +13,10 @@ public class Card : ScriptableObject
 
     public int stamCost;
     public string cardDes;
+    public CardType cardType;
+
+    public enum CardType
+    {
+        Attack, Defense, Buff, Debuff
+    }
 }
