@@ -5,15 +5,13 @@ using TMPro;
 
 public class OptionController : MonoBehaviour
 {
-    public StoryScene scene;
+    private StoryScene scene;
     private TextMeshProUGUI text;
-
     private ChooseOptionController controller;
 
-    private void Start()
+    private void Awake()
     {
         text = GetComponent<TextMeshProUGUI>();
-        controller = GetComponent<ChooseOptionController>();
     }
 
     public float GetHeight()

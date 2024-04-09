@@ -5,7 +5,7 @@ using UnityEngine;
 public class StoryManager : MonoBehaviour
 {
     public GameScene currentScene;
-    private DisplayText dialoguePanel;
+    public DisplayText dialoguePanel;
     public ChooseOptionController chooseController;
 
     private State state = State.IDLE;
@@ -17,8 +17,6 @@ public class StoryManager : MonoBehaviour
 
     void Start()
     {
-        dialoguePanel = this.GetComponent<DisplayText>();
-
         if (currentScene is StoryScene)
         {
             StoryScene storyScene = currentScene as StoryScene;

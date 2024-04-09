@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ChooseOptionController : MonoBehaviour
 {
-    private OptionController option;
+    public OptionController option;
     private StoryManager storyManager;
     private RectTransform rectTransform;
 
@@ -14,8 +14,7 @@ public class ChooseOptionController : MonoBehaviour
 
     void Start()
     {
-        option = GetComponent<OptionController>();
-        storyManager = GetComponent<StoryManager>();
+        storyManager = FindObjectOfType<StoryManager>();
         rectTransform = GetComponent<RectTransform>();
         anim = GetComponent<Animator>();
     }
@@ -27,7 +26,7 @@ public class ChooseOptionController : MonoBehaviour
 
         for(int index = 0; index < scene.labels.Count; index++)
         {
-            OptionController newOption = Instantiate(option.gameObject, transform).GetComponent<OptionController>();
+            OptionController newOption = Instantiate(option.gameObject,transform).GetComponent<OptionController>();
             //newOption.scene = scene.labels[index].nextScene;
 
             if (labelHeight == -1)
@@ -37,6 +36,10 @@ public class ChooseOptionController : MonoBehaviour
 
             newOption.SetUp(scene.labels[index], this, CalculateLabelPosition(index, scene.labels.Count));
         }
+
+        Vector2 size = rectTransform.sizeDelta;
+        size.y = (scene.labels.Count + 2) * labelHeight;
+        rectTransform.sizeDelta = size;
     }
 
     public void PerformChoose(GameScene scene)
