@@ -1,30 +1,56 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     [SerializeField] private Canvas canvas;
-
-    private GameObject desPanel;
+    private GameManager gameManager;
+    private HitBoxSlot enemyHitBox;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
     [SerializeField] private float moveDistance = 100f;
 
-    private void Awake()
+    //public bool checkForCardLocation = false;
+    //public Card cardObject;
+    private Vector2 originalPosition;
+    
+    //public GameObject cardClone;
+    //public Transform cloneSpawner;
+    
+
+    private void Start()
     {
-        desPanel = this.transform.GetChild(0).gameObject;
-        desPanel.SetActive(false);
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
+        gameManager = FindObjectOfType<GameManager>();
+        enemyHitBox = FindObjectOfType<HitBoxSlot>();
+
+        StartCoroutine(GetCardPosition());
+    }
+
+    private void Update()
+    {
+        if (enemyHitBox.cardNeedsRelocate)
+        {
+            //relocate the cards (after consuming the first card)
+            StartCoroutine(GetCardPosition());
+            enemyHitBox.cardNeedsRelocate = false;
+        }
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
         //On mouse down
         Debug.Log("OnPointerDown");
+        gameManager.selectedCard = this;
+
+        //instantiate a clone that takes the original place of this object
+        //this clone spawner needs to take the original place of this card
+        //GameObject cloneImage = Instantiate(cardClone, originalPosition.anchoredPosition);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -32,7 +58,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //When the player start dragging the card
         Debug.Log("OnBeginDrag");
 
-        //instantiate a clone that takes the original place of this object
+        //Transparent effect
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
     }
@@ -45,13 +71,14 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         // return to the original transform
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
+
+        rectTransform.localPosition = originalPosition;
+        //StartCoroutine(ReturnCard());
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         //On Drag updates each frame and monitor where the mouse is 
-        Debug.Log("OnDrag");
-
         //delta might be the problem to fix later. Divided by scale factor so that the scale of the canvas will not mess up the transform of the dragged object
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
@@ -63,22 +90,18 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
         //card will move upwards and widen to help the player look at the effect better
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y + moveDistance);
-
-        Debug.Log(rectTransform.anchoredPosition);
-        //desPanel.SetActive(true);
     }
 
     public void HoverOff()
     {
-        Debug.Log("hover off " + gameObject.name);
+        //Debug.Log("hover off " + gameObject.name);
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y - moveDistance);
 
-        //desPanel.SetActive(false);
     }
 
-    public void HoverOnNone()
+    public IEnumerator GetCardPosition()
     {
-        Debug.Log("not hovering on anything");
-
+        yield return new WaitForEndOfFrame();
+        originalPosition = rectTransform.localPosition;
     }
 }

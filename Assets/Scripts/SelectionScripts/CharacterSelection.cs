@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterSelection : MonoBehaviour
 {
-    private ChoseCharacter chosenChar;
+    private ChooseCharacter chosenChar;
     
     private bool dabriaChosen = false;
     private bool daellaChosen = false;
@@ -14,7 +14,7 @@ public class CharacterSelection : MonoBehaviour
 
     private void Start()
     {
-        chosenChar = FindObjectOfType<ChoseCharacter>();
+        chosenChar = FindObjectOfType<ChooseCharacter>();
     }
     public void DabriaChosen()
     {
