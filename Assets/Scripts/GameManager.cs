@@ -55,14 +55,6 @@ public class GameManager : MonoBehaviour
         ShuffleDeck();
 
         //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
-
-        
-    }
-
-    public void EndPlayerTurn()
-    {
-        //end using the a button to pass turn to the enemies
-
     }
     
     private void ShuffleDeck()
@@ -70,7 +62,7 @@ public class GameManager : MonoBehaviour
         //shuffle deck and give out 5 starter card
         //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
 
-        for (int i = 0; i < 7; i++)
+        for (int i = 0; i < 5; i++)
         {
             int x = Random.Range(1, starterDeck.Count);
             //Debug.Log("Card" + x);
@@ -79,5 +71,7 @@ public class GameManager : MonoBehaviour
             Instantiate(starterDeck[x], playerHand); //not working at the moment
         }
     }
+
+    
 
 }

@@ -51,4 +51,16 @@ public class EnemyBehaviour : MonoBehaviour
             //move to next stage (choose the new path through story?)
         }
     }
+
+    public void ChooseNextAction()
+    {
+        //the enemy can hit the player for -- health or use special move
+
+        int rand = Random.Range(0, 2);
+
+        switch (rand)
+        {
+
+        }
+    }
 }
