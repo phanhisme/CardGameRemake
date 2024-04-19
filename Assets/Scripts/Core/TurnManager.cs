@@ -7,9 +7,36 @@ public class TurnManager : MonoBehaviour
     private GameManager _gm;
     private EnemyBehaviour enemyScript;
 
+    public bool isPlayerTurn;
+    public bool isEnemyTurn;
+
     void Start()
     {
         _gm = FindObjectOfType<GameManager>();
+        enemyScript = FindObjectOfType<EnemyBehaviour>();
+    }
+
+    public void Update()
+    {
+        if (_gm.turn == GameManager.Turn.Player)
+        {
+            isPlayerTurn = true;
+            isEnemyTurn = false;
+        }
+
+        if (_gm.turn == GameManager.Turn.Enemy)
+        {
+            isEnemyTurn = true;
+            isPlayerTurn = false;
+        }
+    }
+
+    public void StartPlayerTurn()
+    {
+        if (_gm.turn == GameManager.Turn.Player)
+        {
+            isPlayerTurn = true;
+        }
     }
 
     public void EndPlayerTurn()
@@ -27,8 +54,8 @@ public class TurnManager : MonoBehaviour
     {
         if (_gm.turn == GameManager.Turn.Enemy)
         {
-            
+            enemyScript.ChooseNextAction();
+            _gm.turn = GameManager.Turn.Player;
         }
     }
-
 }

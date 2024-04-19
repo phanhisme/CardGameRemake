@@ -8,6 +8,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 {
     [SerializeField] private Canvas canvas;
     private GameManager gameManager;
+    private TurnManager turnManager;
     private HitBoxSlot enemyHitBox;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
@@ -27,6 +28,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         gameManager = FindObjectOfType<GameManager>();
+        turnManager = FindObjectOfType<TurnManager>();
         enemyHitBox = FindObjectOfType<HitBoxSlot>();
 
         StartCoroutine(GetCardPosition());
@@ -39,6 +41,11 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
             //relocate the cards (after consuming the first card)
             StartCoroutine(GetCardPosition());
             enemyHitBox.cardNeedsRelocate = false;
+        }
+
+        if (turnManager.isEnemyTurn)
+        {
+            this.enabled = false;
         }
     }
 

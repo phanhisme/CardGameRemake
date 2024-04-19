@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DabriaChosen : MonoBehaviour
+public class DabriaChosen : BasePlayer
 {
     private CharacterSelection charScript;
     public DabriaStarterRelic dabRelic;

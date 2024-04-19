@@ -10,6 +10,8 @@ public class ChooseCharacter : ScriptableObject
     public Sprite splashArt;
     public string charName;
 
+    public int maxHealth; 
+
     //number of max turn depends on the characters
     public int energy;
 }

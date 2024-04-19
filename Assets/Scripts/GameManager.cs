@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public OnDeckBehaviour selectedCard;
     public ChooseCharacter selectedChar;
     public Transform playerHand;
+    public GameObject cardSlot;
 
     //player and turn
     public enum Turn { Player,Enemy};
@@ -47,31 +48,33 @@ public class GameManager : MonoBehaviour
 
     public void PlayerTurn()
     {
-        //player move 
+        //player turn starts here
         turn = Turn.Player;
-        Debug.Log("Turn " + turn);
 
         //shuffle deck and give out 5 starter card
-        ShuffleDeck();
+        ShuffleDeck(5);
 
         //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
     }
     
-    private void ShuffleDeck()
+    private void ShuffleDeck(int numCards)
     {
         //shuffle deck and give out 5 starter card
         //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < numCards; i++)
         {
             int x = Random.Range(1, starterDeck.Count);
             //Debug.Log("Card" + x);
             playerDeck.Add(starterDeck[x]);
 
-            Instantiate(starterDeck[x], playerHand); //not working at the moment
+            //get data from scriptable object
+            Card cardScriptable = starterDeck[x];
+
+            GameObject thisCard = Instantiate(cardSlot, playerHand);
+
+            //display it on UI
+            thisCard.GetComponent<CardUI>();
         }
     }
-
-    
-
 }

@@ -32,8 +32,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //if the effect carry out -> turn decrease
             gameManager.selectedCard = null;
 
-            Debug.Log(enemyScript.health);
-
             //destroy card and effect pooof!
             //Instantiate(testPrefab, eventData.pointerDrag.transform.parent);
             Destroy(eventData.pointerDrag.gameObject);
