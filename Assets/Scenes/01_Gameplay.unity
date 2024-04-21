@@ -1405,17 +1405,17 @@ MonoBehaviour:
   dabRelic: {fileID: 533502993}
   starterDreamDeck: []
   dreamDeck:
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerDeck: []
   maxHP: 0
   currentHP: 0
@@ -1455,11 +1455,11 @@ MonoBehaviour:
   energy: 0
   energyText: {fileID: 1232079887}
   starterDeck:
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
-  - {fileID: 11400000, guid: 70c90713b6ec5694cbbbed222b926fff, type: 2}
+  - {fileID: 11400000, guid: 76cd82bbc15abbf40b1964bb7a33a293, type: 2}
+  - {fileID: 11400000, guid: 76cd82bbc15abbf40b1964bb7a33a293, type: 2}
+  - {fileID: 11400000, guid: 76cd82bbc15abbf40b1964bb7a33a293, type: 2}
+  - {fileID: 11400000, guid: 76cd82bbc15abbf40b1964bb7a33a293, type: 2}
+  - {fileID: 11400000, guid: 76cd82bbc15abbf40b1964bb7a33a293, type: 2}
   playerDeck: []
 --- !u!114 &533502995
 MonoBehaviour:

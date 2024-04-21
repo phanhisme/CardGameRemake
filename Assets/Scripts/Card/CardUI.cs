@@ -7,9 +7,10 @@ using TMPro;
 public class CardUI : MonoBehaviour
 {
     public Image image;
-    private TextMeshProUGUI cardName;
+    public TextMeshProUGUI cardName;
 
-    public void UpdateUI(Card card)
+
+    public void UpdateUI(CardData card)
     {
         image.sprite = card.icon;
         cardName.text = card.cardName;

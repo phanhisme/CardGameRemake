@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     //card
     public List<Card> starterDeck = new List<Card>();
-    public List<Card> playerDeck = new List<Card>();
+    public List<GameObject> playerDeck = new List<GameObject>();
 
 
     void Start()
@@ -64,17 +64,19 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < numCards; i++)
         {
-            int x = Random.Range(1, starterDeck.Count);
-            //Debug.Log("Card" + x);
-            playerDeck.Add(starterDeck[x]);
+            int x = Random.Range(0, starterDeck.Count);
 
             //get data from scriptable object
             Card cardScriptable = starterDeck[x];
 
+            CardData cardData = cardScriptable.data;
+
             GameObject thisCard = Instantiate(cardSlot, playerHand);
 
             //display it on UI
-            thisCard.GetComponent<CardUI>();
+            thisCard.GetComponent<CardUI>().UpdateUI(cardData);
+            
+            playerDeck.Add(thisCard);
         }
     }
 }
