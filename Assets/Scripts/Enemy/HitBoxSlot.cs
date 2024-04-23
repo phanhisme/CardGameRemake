@@ -18,7 +18,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        Debug.Log("OnDrop");
+        //Debug.Log("OnDrop");
         if (eventData.pointerDrag != null && gameManager.energy > 0)
         {
             //the card does not need to be in the perfect middle of the enemy, just hit the enemy will trigger the effect of the card upon dropping.
@@ -39,7 +39,15 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //cards needs to find their new locations since the first card is destroyed
             //thus, they spread differently
 
-            cardNeedsRelocate = true;
+            OnDeckBehaviour[] remainingCards = FindObjectsOfType<OnDeckBehaviour>();
+            
+            foreach (OnDeckBehaviour card in remainingCards)
+            {
+                //resetting position of the remaining cards
+                card.SetPosition();
+            }
+            
+            //cardNeedsRelocate = true;
             gameManager.energy -= 1;
         }
         else if (gameManager.energy <= 0)

@@ -27,6 +27,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
+        canvas = FindObjectOfType<Canvas>();
         gameManager = FindObjectOfType<GameManager>();
         turnManager = FindObjectOfType<TurnManager>();
         enemyHitBox = FindObjectOfType<HitBoxSlot>();
@@ -68,6 +69,9 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //Transparent effect
         canvasGroup.alpha = .6f;
         canvasGroup.blocksRaycasts = false;
+
+        //cannot use this because they will take the hover on value of the card
+        //StartCoroutine(GetCardPosition());
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -79,8 +83,9 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;
 
+        //return the card if they did not meet the enemy (and get destroyed)
         rectTransform.localPosition = originalPosition;
-        //StartCoroutine(ReturnCard());
+        //StartCoroutine(GetCardPosition());
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -103,12 +108,20 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     {
         //Debug.Log("hover off " + gameObject.name);
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y - moveDistance);
+    }
 
+    public void SetPosition()
+    {
+        StartCoroutine(GetCardPosition());
     }
 
     public IEnumerator GetCardPosition()
     {
+        Debug.Log("Relocating...");
+
         yield return new WaitForEndOfFrame();
+
+        //get the location of the original position so that we can return the card later on
         originalPosition = rectTransform.localPosition;
     }
 }
