@@ -15,15 +15,16 @@ public class DabriaStarterRelic : MonoBehaviour
     public string relicName;
     public Image relicIcon;
 
-    private bool conditionSatisfy;
     private int blessingCount = 0;
 
-    public List<DabriaBlessings> blessings = new List<DabriaBlessings>();
-    public DabriaBlessings claimedBlessings;
+    public enum Blessings { Health, Currencies, ExtraCard}
+    [SerializeField]private Blessings randomBlessing;
 
     //display
     public TextMeshProUGUI relicNameText;
     public TextMeshProUGUI blessingCountText;
+
+    public BasePlayer player;
 
     private void Start()
     {
@@ -31,24 +32,18 @@ public class DabriaStarterRelic : MonoBehaviour
         blessingCountText.text = blessingCount.ToString();
         
     }
+
     public void DabRelicActivated()
     {
-        if (conditionSatisfy)
+        player.RelicHealUp(2);
+        blessingCount++;
+
+        if (blessingCount == 4)
         {
-            //dabria.currentHP += 2;
-            //buffCount++;
+            blessingCount = 0;
+        
         }
     }
 
-    public void Update()
-    {
-        //if (buffCount == 4)
-        //{
-        //    buffCount = 0;
-            
-        //    //pull a random blessing
-        //    int x = Random.Range(0, blessings.Count);
-        //}
-    }
-
+   
 }

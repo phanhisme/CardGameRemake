@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Card", menuName = "Card Data")]
+[CreateAssetMenu(fileName = "New Card", menuName = "Card/Card Data", order = 1)]
 public class CardData : ScriptableObject
 {
     //public GameObject cardPrefab;

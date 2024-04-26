@@ -102,8 +102,6 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public IEnumerator GetCardPosition()
     {
-        Debug.Log("Relocating...");
-
         yield return new WaitForEndOfFrame();
 
         //get the location of the original position so that we can return the card later on

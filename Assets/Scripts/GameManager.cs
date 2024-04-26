@@ -16,9 +16,6 @@ public class GameManager : MonoBehaviour
     public enum Turn { Player,Enemy};
     public Turn turn;
 
-    public enum Character { Dabria,Daella,Asif,Amias,Maeve };
-    public Character character;
-
     public int energy; //number of max turn depends on the character
     public TextMeshProUGUI energyText;
 
@@ -35,16 +32,17 @@ public class GameManager : MonoBehaviour
 
         //player starts turn first
 
-        if (selectedChar != null)
-        {
-            Debug.Log("You have chosen " + selectedChar.charName);
-            energy = selectedChar.energy;
-            PlayerTurn();
-        }
+        
     }
 
     void Update()
     {
+        if (selectedChar != null)
+        {
+            energy = selectedChar.energy;
+            PlayerTurn();
+        }
+
         energyText.text = "" + energy.ToString();
     }
 
@@ -100,6 +98,8 @@ public class GameManager : MonoBehaviour
         //end using the a button to pass turn to the enemies
         if (turn == Turn.Player)
         {
+            //CheckForRelic(character);
+
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
@@ -125,4 +125,6 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
     }
+
+    
 }

@@ -1,48 +1,67 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CharacterSelection : MonoBehaviour
 {
-    private ChooseCharacter chosenChar;
-    
-    private bool dabriaChosen = false;
-    private bool daellaChosen = false;
-    private bool asifChosen = false;
-    private bool amiasChosen = false;
-    private bool maeveChosen = false;
+    private GameManager gm;
+    private GameObject selector;
+
+    public enum Character { Dabria, Daella, Asif, Amias, Maeve };
+    public Character character;
 
     private void Start()
     {
-        chosenChar = FindObjectOfType<ChooseCharacter>();
+        gm = FindObjectOfType<GameManager>();
+        selector = GameObject.Find("SELECTOR");
     }
-    public void DabriaChosen()
+    public void DabriaChosen(ChooseCharacter Dabria)
     {
-        dabriaChosen = true;
-        Debug.Log("Chosen: Dabria. Starting game with " + chosenChar.charName);
-    }
-
-    public void DaellaChosen()
-    {
-        daellaChosen = true;
-        Debug.Log("Chosen: Daella. Starting game with " + chosenChar.charName);
+        character = Character.Dabria;
+        gm.selectedChar = Dabria;
+        Debug.Log("Chosen: Dabria. Starting game with " + gm.selectedChar.charName);
     }
 
-    public void AsifChosen()
+    public void DaellaChosen(ChooseCharacter Daella)
     {
-        asifChosen = true;
-        Debug.Log("Chosen: Asif. Starting game with " + chosenChar.charName);
+        character = Character.Daella;
+        gm.selectedChar = Daella;
+        Debug.Log("Chosen: Daella. Starting game with " + gm.selectedChar.charName);
     }
 
-    public void AmiasChosen()
+    public void AsifChosen(ChooseCharacter Asif)
     {
-        amiasChosen = true;
-        Debug.Log("Chosen: Amias. Starting game with " + chosenChar.charName);
+        character = Character.Asif;
+        gm.selectedChar = Asif;
+        Debug.Log("Chosen: Asif. Starting game with " + gm.selectedChar.charName);
     }
 
-    public void MaeveChosen()
+    public void AmiasChosen(ChooseCharacter Amias)
     {
-        maeveChosen = true;
-        Debug.Log("Chosen: Maeve. Starting game with " + chosenChar.charName);
+       character = Character.Amias;
+        gm.selectedChar = Amias;
+        Debug.Log("Chosen: Amias. Starting game with " + gm.selectedChar.charName);
+    }
+
+    public void MaeveChosen(ChooseCharacter Maeve)
+    {
+        character = Character.Maeve;
+        gm.selectedChar = Maeve;
+        Debug.Log("Chosen: Maeve. Starting game with " + gm.selectedChar.charName);
+    }
+
+    public void CheckForRelic(Character chosenChar)
+    {
+        switch (chosenChar)
+        {
+            case Character.Dabria:
+                DabriaStarterRelic dabrelic = FindObjectOfType<DabriaStarterRelic>();
+                dabrelic.DabRelicActivated();
+                break;
+
+            case Character.Daella:
+                break;
+        }
     }
 }

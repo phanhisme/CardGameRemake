@@ -45,4 +45,9 @@ public class BasePlayer : MonoBehaviour
     {
         blockAmount += amount;
     }
+
+    public void RelicHealUp(int health)
+    {
+        playerHealth += health;
+    }
 }
