@@ -8,7 +8,7 @@ public class EnemyBehaviour : MonoBehaviour
 {
     public EnemyScriptableObject enemyObject;
     private InGameCurrency currencyScript;
-    private BasePlayer player;
+    public BasePlayer player;
 
     private Image enemyImage;
     public TextMeshProUGUI enemyName;
@@ -16,18 +16,15 @@ public class EnemyBehaviour : MonoBehaviour
     public int health; //keep track of the enemy, using to only keep the max health of the enemy and not the current health
     public TextMeshProUGUI healthDisplay;
 
-    private int enemyAttack;
-
     private Animator anim;
 
     void Start()
     {
         anim = GetComponent<Animator>();
         currencyScript = FindObjectOfType<InGameCurrency>();
-        player = FindObjectOfType<BasePlayer>();
+        //player = FindObjectOfType<BasePlayer>();
 
         health = enemyObject.maxHealth;
-        enemyAttack = enemyObject.damageDealt;
         
         enemyName.text = enemyObject.enemyName;
 
@@ -70,14 +67,17 @@ public class EnemyBehaviour : MonoBehaviour
                 //action 0
                 Action0();
                 break;
+
             case 1:
                 //action 1
                 Action1();
                 break;
+
             case 2:
                 //action 2
                 Action2();
                 break;
+
             default:
                 Debug.Log("enemy - failed to choose action");
                 break;
@@ -87,7 +87,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void Action0()
     {
-        player.TakeDamage(enemyAttack);
+        player.TakeDamage(enemyObject.damageDealt);
     }
 
     public void Action1()

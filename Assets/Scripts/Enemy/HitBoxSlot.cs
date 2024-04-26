@@ -6,13 +6,14 @@ using UnityEngine.EventSystems;
 public class HitBoxSlot : MonoBehaviour, IDropHandler
 {
     private EnemyBehaviour enemyScript;
+    public BasePlayer playerScript;
     private GameManager gameManager;
-    public bool cardNeedsRelocate = false;
-    public GameObject testPrefab;
+
 
     private void Start()
     {
-        enemyScript = GetComponent<EnemyBehaviour>();
+        //playerScript = FindObjectOfType<BasePlayer>();
+        enemyScript = FindObjectOfType<EnemyBehaviour>();
         gameManager = FindObjectOfType<GameManager>();
     }
 
@@ -23,11 +24,21 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         {
             //the card does not need to be in the perfect middle of the enemy, just hit the enemy will trigger the effect of the card upon dropping.
 
-            //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
-            Debug.Log(eventData.pointerDrag.name + " is being dropped on " + this.gameObject.name);
+            //setting scriptable
+            OnDeckBehaviour thisCard = gameManager.selectedCard;
+            CardData data = thisCard.cardData;
 
-            //effect of the card
-            enemyScript.TakeDamage(10);
+            //if the card is of attack type and is hitting the enmy
+            if (data.cardType == CardData.CardType.Attack && gameObject.tag == "Enemy")
+            {
+                //effect of the card on the enemy
+                enemyScript.TakeDamage(data.effectAmount);
+            }
+
+            else if(data.cardType == CardData.CardType.Defense && gameObject.tag == "Player")
+            {
+                playerScript.AddBlock(data.effectAmount);
+            }
 
             //if the effect carry out -> turn decrease
             gameManager.selectedCard = null;
@@ -38,18 +49,18 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
             //cards needs to find their new locations since the first card is destroyed
             //thus, they spread differently
-
             OnDeckBehaviour[] remainingCards = FindObjectsOfType<OnDeckBehaviour>();
-            
+
             foreach (OnDeckBehaviour card in remainingCards)
             {
                 //resetting position of the remaining cards
                 card.SetPosition();
             }
-            
-            //cardNeedsRelocate = true;
+
+            //minus energy based on the stam cost
             gameManager.energy -= 1;
         }
+
         else if (gameManager.energy <= 0)
         {
             Debug.Log("You ran out of energy, cannot place more cards");

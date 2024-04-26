@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     //script reference
     public OnDeckBehaviour selectedCard;
+
     public ChooseCharacter selectedChar;
     public Transform playerHand;
     public GameObject cardSlot;
@@ -25,6 +26,7 @@ public class GameManager : MonoBehaviour
     public List<Card> starterDeck = new List<Card>();
     public List<GameObject> playerDeck = new List<GameObject>();
 
+    
 
     void Start()
     {
@@ -67,16 +69,60 @@ public class GameManager : MonoBehaviour
             int x = Random.Range(0, starterDeck.Count);
 
             //get data from scriptable object
-            Card cardScriptable = starterDeck[x];
+            Card card = starterDeck[x];
 
-            CardData cardData = cardScriptable.data;
+            CardData cardData = card.data;
+
 
             GameObject thisCard = Instantiate(cardSlot, playerHand);
 
             //display it on UI
             thisCard.GetComponent<CardUI>().UpdateUI(cardData);
             
+            //find scriptable
+            OnDeckBehaviour onDeck = thisCard.GetComponent<OnDeckBehaviour>();
+            onDeck.SetCardData(cardData);
+            
             playerDeck.Add(thisCard);
         }
+    }
+
+    public void StartPlayerTurn()
+    {
+        if (turn == Turn.Player)
+        {
+
+        }
+    }
+
+    public void EndPlayerTurn()
+    {
+        //end using the a button to pass turn to the enemies
+        if (turn == Turn.Player)
+        {
+            turn = Turn.Enemy;
+            EnemyTurn();
+            //run banner "Enemy's Turn"
+
+        }
+    }
+    private void EnemyTurn()
+    {
+        if (turn == Turn.Enemy)
+        {
+            StartCoroutine(WaitForSeconds(0.5f));
+            EnemyBehaviour enemyScript = FindObjectOfType<EnemyBehaviour>();
+            enemyScript.ChooseNextAction();
+
+            //run player's turn baner
+            StartCoroutine(WaitForSeconds(0.5f));
+            turn = Turn.Player;
+            energy = selectedChar.energy;
+        }
+    }
+
+    IEnumerator WaitForSeconds(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
     }
 }

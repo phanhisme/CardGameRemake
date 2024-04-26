@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
-  m_Name: TestCardData
+  m_Name: DefenseCard
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 1adc6cb4e1586d04cb5b20a83cb1654b, type: 3}
-  cardFront: {fileID: 21300000, guid: eda2d1863606e3344ac0a5ce6eed7b80, type: 3}
-  cardName: The first snow
+  icon: {fileID: 21300000, guid: d4b0d886bde602f4d87cc810e578e2c7, type: 3}
+  cardFront: {fileID: 0}
+  cardName: WAHOO
   stamCost: 1
   effectAmount: 10
-  cardDes: Attack for 4 damage
-  cardType: 0
+  cardDes: 
+  cardType: 1

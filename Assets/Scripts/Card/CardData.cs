@@ -11,10 +11,8 @@ public class CardData : ScriptableObject
     public Sprite cardFront;
     public string cardName;
 
-    public bool isStarter;
-
     public int stamCost;
-    public int damage;
+    public int effectAmount;
 
     public string cardDes;
     public CardType cardType;

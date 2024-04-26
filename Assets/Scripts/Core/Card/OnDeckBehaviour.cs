@@ -8,20 +8,15 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 {
     [SerializeField] private Canvas canvas;
     private GameManager gameManager;
-    private TurnManager turnManager;
-    private HitBoxSlot enemyHitBox;
+    private HitBoxSlot hitBox;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
     [SerializeField] private float moveDistance = 100f;
-
-    //public bool checkForCardLocation = false;
-    //public Card cardObject;
     private Vector2 originalPosition;
-    
-    //public GameObject cardClone;
-    //public Transform cloneSpawner;
-    
+
+    //card type
+    public CardData cardData;
 
     private void Start()
     {
@@ -29,25 +24,14 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = FindObjectOfType<Canvas>();
         gameManager = FindObjectOfType<GameManager>();
-        turnManager = FindObjectOfType<TurnManager>();
-        enemyHitBox = FindObjectOfType<HitBoxSlot>();
+        hitBox = FindObjectOfType<HitBoxSlot>();
 
         StartCoroutine(GetCardPosition());
     }
 
     private void Update()
     {
-        if (enemyHitBox.cardNeedsRelocate)
-        {
-            //relocate the cards (after consuming the first card)
-            StartCoroutine(GetCardPosition());
-            enemyHitBox.cardNeedsRelocate = false;
-        }
-
-        if (turnManager.isEnemyTurn)
-        {
-            this.enabled = false;
-        }
+    
     }
 
     public void OnPointerDown(PointerEventData eventData)
@@ -55,10 +39,6 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         //On mouse down
         Debug.Log("OnPointerDown");
         gameManager.selectedCard = this;
-
-        //instantiate a clone that takes the original place of this object
-        //this clone spawner needs to take the original place of this card
-        //GameObject cloneImage = Instantiate(cardClone, originalPosition.anchoredPosition);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -113,6 +93,11 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void SetPosition()
     {
         StartCoroutine(GetCardPosition());
+    }
+
+    public void SetCardData(CardData data)
+    {
+        cardData = data;
     }
 
     public IEnumerator GetCardPosition()
