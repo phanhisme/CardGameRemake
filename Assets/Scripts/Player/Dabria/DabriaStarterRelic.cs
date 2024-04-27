@@ -12,38 +12,70 @@ public class DabriaStarterRelic : MonoBehaviour
     //at the start of turn, Dabria will heal 2HP. After 4 rounds and above 50HP, Dabria will receive a "blessing"
     //types of blessings: coin (ig currency), HP, extra card to deck, extra card to deck on hand, turn, random relic...
 
-    public string relicName;
-    public Image relicIcon;
-
-    private int blessingCount = 0;
+    public int blessingCount = 0;
 
     public enum Blessings { Health, Currencies, ExtraCard}
-    [SerializeField]private Blessings randomBlessing;
+    private Blessings randomBlessing;
 
-    //display
-    public TextMeshProUGUI relicNameText;
-    public TextMeshProUGUI blessingCountText;
+    private BasePlayer player;
 
-    public BasePlayer player;
-
-    private void Start()
+    public void RelicUIUpdate()
     {
-        relicNameText.text = relicName;
-        blessingCountText.text = blessingCount.ToString();
-        
+        RelicDisplay relicDisplay = FindObjectOfType<RelicDisplay>();
+        relicDisplay.DabRelic(this);
     }
 
-    public void DabRelicActivated()
+    public void DabRelicEffect()
     {
-        player.RelicHealUp(2);
-        blessingCount++;
+        blessingCount += 1;
+        RelicUIUpdate();
 
-        if (blessingCount == 4)
+        player = FindObjectOfType<BasePlayer>();
+        if (player != null)
         {
-            blessingCount = 0;
-        
+            player.RelicHealUp(2);
+
+            if (blessingCount == 4)
+            {
+                if (player.isAbove50)
+                {
+                    Debug.Log("You received Blessings from the Moon");
+
+                    int randBlessing = Random.Range(0, 2); //I CANT USE BLESSING.LENGHT, WHY?
+                    switch (randBlessing)
+                    {
+                        case 0:
+                            randomBlessing = Blessings.Health;
+                            Debug.Log("You receive 5 health");
+                            player.RelicHealUp(5);
+
+                            break;
+
+                        case 1:
+                            randomBlessing = Blessings.Currencies;
+                            Debug.Log("You receive 10 currency");
+
+                            InGameCurrency currency = FindObjectOfType<InGameCurrency>();
+                            currency.inGameCurrency += 10;
+
+                            break;
+
+                        case 2:
+                            randomBlessing = Blessings.ExtraCard;
+                            Debug.Log("You receive an extra card");
+
+                            GameManager gm = FindObjectOfType<GameManager>();
+                            gm.ShuffleDeck(1);
+
+                            break;
+
+                    }
+                }
+
+                blessingCount = 0;
+                RelicUIUpdate();
+            }
         }
     }
-
    
 }

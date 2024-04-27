@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public OnDeckBehaviour selectedCard;
 
     public ChooseCharacter selectedChar;
+    private CharacterSelection.Character character;
+
     public Transform playerHand;
     public GameObject cardSlot;
 
@@ -22,8 +24,7 @@ public class GameManager : MonoBehaviour
     //card
     public List<Card> starterDeck = new List<Card>();
     public List<GameObject> playerDeck = new List<GameObject>();
-
-    
+    public List<GameObject> discardedDeck = new List<GameObject>();
 
     void Start()
     {
@@ -37,27 +38,26 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (selectedChar != null)
-        {
-            energy = selectedChar.energy;
-            PlayerTurn();
-        }
-
         energyText.text = "" + energy.ToString();
     }
 
     public void PlayerTurn()
     {
-        //player turn starts here
-        turn = Turn.Player;
+        if (selectedChar != null)
+        {
+            //player turn starts here
+            turn = Turn.Player;
+            energy = selectedChar.energy;
 
-        //shuffle deck and give out 5 starter card
-        ShuffleDeck(5);
 
-        //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
+            //shuffle deck and give out 5 starter card
+            ShuffleDeck(5);
+
+            //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
+        }
     }
     
-    private void ShuffleDeck(int numCards)
+    public void ShuffleDeck(int numCards)
     {
         //shuffle deck and give out 5 starter card
         //player can only hold 7 cards at max -> discard if the the number of card on hand get > 7
@@ -99,7 +99,13 @@ public class GameManager : MonoBehaviour
         if (turn == Turn.Player)
         {
             //CheckForRelic(character);
+            if (character == CharacterSelection.Character.Dabria)
+            {
+                DabriaStarterRelic relic = FindObjectOfType<DabriaStarterRelic>();
+                relic.DabRelicEffect();
+            }
 
+            MoveCard();
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
@@ -119,6 +125,17 @@ public class GameManager : MonoBehaviour
             turn = Turn.Player;
             energy = selectedChar.energy;
         }
+    }
+
+    public void MoveCard()
+    {
+        //THIS IS NOT WORKING!
+
+        discardedDeck.AddRange(playerDeck);
+        Debug.Log(discardedDeck.Count);
+        playerDeck.Clear();
+        Debug.Log(playerDeck.Count);
+        
     }
 
     IEnumerator WaitForSeconds(float waitTime)

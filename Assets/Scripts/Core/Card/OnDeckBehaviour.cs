@@ -77,9 +77,6 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 
     public void HoverOn()
     {
-        //pop out description of the card here
-        Debug.Log("hover on" + gameObject.name);
-
         //card will move upwards and widen to help the player look at the effect better
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y + moveDistance);
     }

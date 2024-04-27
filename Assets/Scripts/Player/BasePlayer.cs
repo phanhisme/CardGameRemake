@@ -14,6 +14,7 @@ public class BasePlayer : MonoBehaviour
     public TextMeshProUGUI text2;
 
     [SerializeField] //private int playerDamage; //this depends on the card the player use!
+    public bool isAbove50;
 
     void Start()
     {
@@ -46,8 +47,16 @@ public class BasePlayer : MonoBehaviour
         blockAmount += amount;
     }
 
+
     public void RelicHealUp(int health)
     {
         playerHealth += health;
+
+        if (playerHealth >= 50)
+        {
+            isAbove50 = true;
+        }
+        else
+            isAbove50 = false;
     }
 }

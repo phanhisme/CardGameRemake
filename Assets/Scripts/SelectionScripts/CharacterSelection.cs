@@ -7,6 +7,7 @@ public class CharacterSelection : MonoBehaviour
 {
     private GameManager gm;
     private GameObject selector;
+    
 
     public enum Character { Dabria, Daella, Asif, Amias, Maeve };
     public Character character;
@@ -21,6 +22,8 @@ public class CharacterSelection : MonoBehaviour
         character = Character.Dabria;
         gm.selectedChar = Dabria;
         Debug.Log("Chosen: Dabria. Starting game with " + gm.selectedChar.charName);
+
+        RemoveScene();
     }
 
     public void DaellaChosen(ChooseCharacter Daella)
@@ -57,11 +60,20 @@ public class CharacterSelection : MonoBehaviour
         {
             case Character.Dabria:
                 DabriaStarterRelic dabrelic = FindObjectOfType<DabriaStarterRelic>();
-                dabrelic.DabRelicActivated();
+                dabrelic.RelicUIUpdate();
+                
+
                 break;
 
             case Character.Daella:
                 break;
         }
+    }
+
+    private void RemoveScene()
+    {
+        selector.SetActive(false);
+        CheckForRelic(character);
+        gm.PlayerTurn();
     }
 }
