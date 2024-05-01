@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public Transform playerHand;
     public GameObject cardSlot;
+    public Button endTurnButton;
 
     //player and turn
     public enum Turn { Player,Enemy};
@@ -23,8 +25,8 @@ public class GameManager : MonoBehaviour
 
     //card
     public List<Card> starterDeck = new List<Card>();
-    public List<GameObject> playerDeck = new List<GameObject>();
-    public List<GameObject> discardedDeck = new List<GameObject>();
+    public List<Card> playerDeck = new List<Card>();
+    public List<Card> discardedDeck = new List<Card>();
 
     void Start()
     {
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour
             OnDeckBehaviour onDeck = thisCard.GetComponent<OnDeckBehaviour>();
             onDeck.SetCardData(cardData);
             
-            playerDeck.Add(thisCard);
+            playerDeck.Add(card);
         }
     }
 
@@ -98,14 +100,24 @@ public class GameManager : MonoBehaviour
         //end using the a button to pass turn to the enemies
         if (turn == Turn.Player)
         {
-            //CheckForRelic(character);
+            endTurnButton.enabled = false;
+
+            //check for dabria relic (happens when turn ends)
             if (character == CharacterSelection.Character.Dabria)
             {
                 DabriaStarterRelic relic = FindObjectOfType<DabriaStarterRelic>();
                 relic.DabRelicEffect();
             }
 
-            MoveCard();
+            //check for the remaining cards and add to the discard deck
+            foreach (Card card in playerDeck)
+            {
+                Debug.Log(playerDeck.Count);
+                DiscardCard(card);
+            }
+
+            //foreach (CardUI)
+
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
@@ -127,21 +139,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void MoveCard()
+    public void DiscardCard(Card card)
     {
         //THIS IS NOT WORKING!
 
-        discardedDeck.AddRange(playerDeck);
+        //discardedDeck.AddRange(playerDeck);
+        //
+        //playerDeck.Clear();
+        //
+
+        discardedDeck.Add(card);
         Debug.Log(discardedDeck.Count);
-        playerDeck.Clear();
-        Debug.Log(playerDeck.Count);
-        
+
+        //update number of card in discarded deck here
     }
 
     IEnumerator WaitForSeconds(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
     }
-
-    
 }
