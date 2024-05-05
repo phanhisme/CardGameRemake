@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
-  m_Name: TestCardData
+  m_Name: 07_StellarShardsData
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 1adc6cb4e1586d04cb5b20a83cb1654b, type: 3}
+  icon: {fileID: 21300000, guid: 9df6b4c5e96bbad4f8f454d3d65dba47, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
-  cardName: The first snow
-  stamCost: 1
-  effectAmount: 10
-  cardDes: Attack for <color=green>4 damage</color>
+  cardName: Stellar Shards
+  stamCost: 3
+  effectAmount: 24
+  cardDes: If there is 1 enemy, deal 24 damage. If there are more than 1, deal 12
+    damage each
   cardType: 0

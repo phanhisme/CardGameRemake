@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DefenseCard
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: d4b0d886bde602f4d87cc810e578e2c7, type: 3}
-  cardFront: {fileID: 0}
+  cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
   cardName: WAHOO
   stamCost: 1
   effectAmount: 10
-  cardDes: 
+  cardDes: DEFENSE
   cardType: 1

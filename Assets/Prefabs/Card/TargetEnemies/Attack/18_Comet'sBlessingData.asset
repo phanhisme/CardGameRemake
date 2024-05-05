@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
-  m_Name: TestCardData
+  m_Name: 18_Comet'sBlessingData
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 1adc6cb4e1586d04cb5b20a83cb1654b, type: 3}
+  icon: {fileID: 21300000, guid: 73ed977e91ecd0e44ab8f14dc6559c13, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
-  cardName: The first snow
+  cardName: Comet's Blessing
   stamCost: 1
-  effectAmount: 10
-  cardDes: Attack for <color=green>4 damage</color>
+  effectAmount: 4
+  cardDes: Deal 4 damage to all enemies and gain 4 extra Skill cards. These cards
+    deal 4 single damage and exhaust after use
   cardType: 0
