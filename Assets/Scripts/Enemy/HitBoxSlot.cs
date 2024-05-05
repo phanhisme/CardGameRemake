@@ -33,6 +33,29 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             {
                 //effect of the card on the enemy
                 enemyScript.TakeDamage(data.effectAmount);
+
+                switch (data.ID)
+                {
+                    case 02:
+                        Debug.Log(data.name + data.ID);
+                        break;
+
+                    case 07:
+                        Debug.Log(data.name + data.ID);
+                        break;
+
+                    case 12:
+                        Debug.Log(data.name + data.ID);
+                        break;
+
+                    case 15:
+                        Debug.Log(data.name + data.ID);
+                        break;
+
+                    case 18:
+                        Debug.Log(data.name + data.ID);
+                        break;
+                }
             }
 
             else if(data.cardType == CardData.CardType.Defense && gameObject.tag == "Player")

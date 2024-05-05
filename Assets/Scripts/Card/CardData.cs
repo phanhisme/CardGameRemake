@@ -6,7 +6,9 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     //public GameObject cardPrefab;
-    
+
+    public int ID;
+
     public Sprite icon;
     public Sprite cardFront;
     public string cardName;

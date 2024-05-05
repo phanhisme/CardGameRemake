@@ -8,7 +8,6 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
 {
     [SerializeField] private Canvas canvas;
     private GameManager gameManager;
-    private HitBoxSlot hitBox;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
 
@@ -24,7 +23,6 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = FindObjectOfType<Canvas>();
         gameManager = FindObjectOfType<GameManager>();
-        hitBox = FindObjectOfType<HitBoxSlot>();
 
         StartCoroutine(GetCardPosition());
     }
