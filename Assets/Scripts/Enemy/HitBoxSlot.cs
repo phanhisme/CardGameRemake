@@ -27,79 +27,126 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         {
             //the card does not need to be in the perfect middle of the enemy, just hit the enemy will trigger the effect of the card upon dropping.
             //if the card is of attack type and is hitting the enmy
-            if (data.cardType == CardData.CardType.Attack && gameObject.tag == "Enemy")
+            if (gameObject.tag == "Enemy")
             {
+                //find enemy behaviour within the dropped target
                 EnemyBehaviour enemyScript = GetComponent<EnemyBehaviour>();
-
-                //effect of the card on the enemy
-                switch (data.ID)
+                
+                //only attack cards
+                if(data.cardType == CardData.CardType.Attack)
                 {
-                    case 02: //Deal 4 damage to a single enemy
-                        enemyScript.TakeDamage(data.effectAmount);
-                        break;
+                    //effect of the card on the enemy
+                    switch (data.ID)
+                    {
+                        case 02: //Deal 4 damage to a single enemy
+                            enemyScript.TakeDamage(data.effectAmount);
+                            break;
 
-                    case 07: //If there is 1 enemy, deal 24 damage. If more than 1, deal 12 each
-                        if (gameManager.enemyInStage <= 1)
-                        {
-                            enemyScript.TakeDamage(data.effectAmount * 2); //24 damage
-                        }
+                        case 07: //If there is 1 enemy, deal 24 damage. If more than 1, deal 12 each
+                            if (gameManager.enemyInStage <= 1)
+                            {
+                                enemyScript.TakeDamage(data.effectAmount * 2); //24 damage
+                            }
 
-                        else if (gameManager.enemyInStage > 1)
-                        {
-                            GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
-                            foreach (GameObject entity in enemy)
+                            else if (gameManager.enemyInStage > 1)
+                            {
+                                GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+                                foreach (GameObject entity in enemy)
+                                {
+                                    EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
+                                    target.TakeDamage(data.effectAmount); //12 damage
+                                }
+                            }
+                            break;
+
+                        case 12: //Deal 6 Damage. If the target is inflicted by Endless Dream, deal double the damage and gain 1 Energy
+                            bool enlessDream = enemyScript.appliedStatus.Contains(enemyScript.allStatus[1]);
+
+                            //remember to remove the applied effects on the enemies!
+                            Debug.Log(enlessDream);
+                            if (enlessDream)
+                            {
+                                enemyScript.TakeDamage(data.effectAmount * 2);
+                                gameManager.energy += 1;
+                            }
+                            else
+                                enemyScript.TakeDamage(data.effectAmount);
+                            break;
+
+                        case 15: //Deal 6 Damage to all enemies. Heals Health equal to the unblocked damage dealt with this attack
+                            GameObject[] aEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+                            foreach (GameObject entity in aEnemy)
                             {
                                 EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
-                                target.TakeDamage(data.effectAmount); //12 damage
+
+                                //record current health
+                                int currentHealth = target.health;
+
+                                //take damage
+                                target.TakeDamage(data.effectAmount); //6 damage
+
+                                //if the enemy lose health
+                                if (target.health < currentHealth)
+                                {
+                                    //heal with the health lost from all the enemy
+                                    playerScript.HealUp(currentHealth - target.health);
+                                    Debug.Log(currentHealth - target.health);
+                                }
                             }
-                        }
+                            break;
 
-                        break;
-
-                    case 12: //Deal 6 Damage. If the target is inflicted by Endless Dream, deal double the damage and gain 1 Energy
-                        bool enlessDream = enemyScript.appliedStatus.Contains(enemyScript.allStatus[1]);
-                        if (enlessDream)
-                        {
-                            enemyScript.TakeDamage(data.effectAmount * 2);
-                            gameManager.energy += 1;
-                        }
-                        else
-                            enemyScript.TakeDamage(data.effectAmount);
-                        break;
-
-                    case 15: //Deal 6 Damage to all enemies. Heals Health equal to the unblocked damage dealt with this attack
-                        GameObject[] aEnemy = GameObject.FindGameObjectsWithTag("Enemy");
-                        foreach (GameObject entity in aEnemy)
-                        {
-                            EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
-                            
-                            //record current health
-                            int currentHealth = target.health;
-
-                            //take damage
-                            target.TakeDamage(data.effectAmount); //6 damage
-
-                            //if the enemy lose health
-                            if (target.health < currentHealth)
+                        case 18: //Deal 4 damage to all enemies and gain 4 extra Skill cards. These cards deal 4 single damage and exhaust after use
+                            GameObject[] bEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+                            foreach (GameObject entity in bEnemy)
                             {
-                                //heal with the health lost from all the enemy
-                                playerScript.HealUp(currentHealth - target.health);
-                                Debug.Log(currentHealth - target.health);
+                                EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
+                                //take damage
+                                target.TakeDamage(data.effectAmount); //4 damage
+                                                                      //gain 4 cards (we do not have this card yet)
+                                                                      //also change the card front to be other than "Main_Dream"
                             }
+                            break;
 
-                            //it is only taking 1 enemy (DONT KNOW WHY???
-                        }
-                        break;
-
-                    case 18:
-                        Debug.Log(data.name + data.ID);
-                        break;
+                        default:
+                            Debug.Log("There is no Attack cards with this ID: " + data.ID);
+                            break;
+                    }
+                
                 }
             }
 
-            else if (data.cardType == CardData.CardType.Defense && gameObject.tag == "Player")
+            else if (gameObject.tag == "Player") //the reciever is player
             {
-                playerScript.AddBlock(data.effectAmount);
+                if(data.cardType == CardData.CardType.Defense)
+                {
+                    switch (data.ID)
+                    {
+                        case 03: //Gain 5 Blocks
+                            playerScript.AddBlock(data.effectAmount);
+                            break;
+
+                        case 04: //Gain 8 Blocks and draw a card
+                            playerScript.AddBlock(data.effectAmount);
+                            gameManager.ShuffleDeck(1); //draw a card
+                            break;
+
+                        case 10: //Can only be placed if there are at least 3 Block Card at hand.
+                                 //All Blocksrecieved this turn will not be removed at the star of next turn
+
+                            //Card defenseCard = data.cardType;
+                            //foreach(CardData.CardType.Defense in gameManager.playerDeck)
+                            //{
+
+                            //}
+                            break;
+
+                        case 11: //Gain 6 and Moonlight effect for 2 turn
+                            break;
+                    }
+                    
+                }
+                
+
             }
 
             //if the effect carry out -> turn decrease

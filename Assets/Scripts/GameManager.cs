@@ -23,8 +23,8 @@ public class GameManager : MonoBehaviour
 
     //card
     public List<Card> starterDeck = new List<Card>();
-    public List<GameObject> playerDeck = new List<GameObject>();
-    public List<GameObject> discardedDeck = new List<GameObject>();
+    public List<Card> playerDeck = new List<Card>();
+    public List<Card> discardedDeck = new List<Card>();
 
     public List<GameObject> enemyList = new List<GameObject>();
     public int enemyInStage;
@@ -74,7 +74,6 @@ public class GameManager : MonoBehaviour
 
             CardData cardData = card.data;
 
-
             GameObject thisCard = Instantiate(cardSlot, playerHand);
 
             //display it on UI
@@ -84,7 +83,7 @@ public class GameManager : MonoBehaviour
             OnDeckBehaviour onDeck = thisCard.GetComponent<OnDeckBehaviour>();
             onDeck.SetCardData(cardData);
             
-            playerDeck.Add(thisCard);
+            playerDeck.Add(card);
         }
     }
 
@@ -153,5 +152,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(waitTime);
     }
 
-    
+    public int GetDefenseCard()
+    {
+        int i = 0;
+        foreach (Card cards in playerDeck)
+        {
+            if (cards.data.cardType == CardData.CardType.Defense)
+            {
+                i++;
+            }
+        }
+        return i;
+    }
 }
