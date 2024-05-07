@@ -11,5 +11,4 @@ public class EnemyScriptableObject : ScriptableObject
     public int damageDealt;
 
     public int coinDrop;
-
 }

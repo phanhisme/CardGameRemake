@@ -16,3 +16,4 @@ MonoBehaviour:
   maxHealth: 20
   damageDealt: 10
   coinDrop: 20
+  speed: 3

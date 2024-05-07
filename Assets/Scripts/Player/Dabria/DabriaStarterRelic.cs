@@ -33,11 +33,11 @@ public class DabriaStarterRelic : MonoBehaviour
         player = FindObjectOfType<BasePlayer>();
         if (player != null)
         {
-            player.RelicHealUp(2);
+            player.HealUp(2);
 
             if (blessingCount == 4)
             {
-                if (player.isAbove50)
+                if (player.HealthCheck())
                 {
                     Debug.Log("You received Blessings from the Moon");
 
@@ -47,7 +47,7 @@ public class DabriaStarterRelic : MonoBehaviour
                         case 0:
                             randomBlessing = Blessings.Health;
                             Debug.Log("You receive 5 health");
-                            player.RelicHealUp(5);
+                            player.HealUp(5);
 
                             break;
 

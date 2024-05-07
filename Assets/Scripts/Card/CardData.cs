@@ -21,6 +21,6 @@ public class CardData : ScriptableObject
 
     public enum CardType
     {
-        Attack, Defense, Buff, Debuff
+        Attack, Defense, Skill
     }
 }

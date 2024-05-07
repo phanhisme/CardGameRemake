@@ -13,8 +13,9 @@ public class BasePlayer : MonoBehaviour
     public TextMeshProUGUI text;
     public TextMeshProUGUI text2;
 
-    [SerializeField] //private int playerDamage; //this depends on the card the player use!
-    public bool isAbove50;
+    //keep track of the the buff/debuff
+    public List<Status> allStatus = new List<Status>();
+    public List<Status> appliedStatus = new List<Status>();
 
     void Start()
     {
@@ -48,15 +49,20 @@ public class BasePlayer : MonoBehaviour
     }
 
 
-    public void RelicHealUp(int health)
+    public void HealUp(int health)
     {
         playerHealth += health;
+    }
 
+    public bool HealthCheck()
+    {
         if (playerHealth >= 50)
         {
-            isAbove50 = true;
+            return true;
         }
         else
-            isAbove50 = false;
+            return false;
     }
+
+    
 }

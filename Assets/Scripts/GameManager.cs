@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> playerDeck = new List<GameObject>();
     public List<GameObject> discardedDeck = new List<GameObject>();
 
+    public List<GameObject> enemyList = new List<GameObject>();
+    public int enemyInStage;
+
     void Start()
     {
         //selected char will be selected in another scene and bring over to this scene in a dont destroy script
@@ -95,6 +98,7 @@ public class GameManager : MonoBehaviour
 
     public void EndPlayerTurn()
     {
+        Debug.Log("End of " + turn);
         //end using the a button to pass turn to the enemies
         if (turn == Turn.Player)
         {
@@ -105,7 +109,7 @@ public class GameManager : MonoBehaviour
                 relic.DabRelicEffect();
             }
 
-            MoveCard();
+            //MoveCard();
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
@@ -114,16 +118,22 @@ public class GameManager : MonoBehaviour
     }
     private void EnemyTurn()
     {
+        Debug.Log(turn);
         if (turn == Turn.Enemy)
         {
-            StartCoroutine(WaitForSeconds(0.5f));
-            EnemyBehaviour enemyScript = FindObjectOfType<EnemyBehaviour>();
-            enemyScript.ChooseNextAction();
+            //StartCoroutine(WaitForSeconds(0.5f));
+            GameObject[] enemyL = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject entity in enemyL)
+            {
+                Debug.Log(entity.name);
+                EnemyBehaviour e = entity.GetComponent<EnemyBehaviour>();
+                e.ChooseNextAction();
+                StartCoroutine(WaitForSeconds(0.5f));
+            }
 
             //run player's turn baner
-            StartCoroutine(WaitForSeconds(0.5f));
-            turn = Turn.Player;
-            energy = selectedChar.energy;
+            //turn = Turn.Player;
+            //energy = selectedChar.energy;
         }
     }
 
@@ -131,10 +141,10 @@ public class GameManager : MonoBehaviour
     {
         //THIS IS NOT WORKING!
 
-        discardedDeck.AddRange(playerDeck);
-        Debug.Log(discardedDeck.Count);
-        playerDeck.Clear();
-        Debug.Log(playerDeck.Count);
+        //discardedDeck.AddRange(playerDeck);
+        //Debug.Log(discardedDeck.Count);
+        //playerDeck.Clear();
+        //Debug.Log(playerDeck.Count);
         
     }
 

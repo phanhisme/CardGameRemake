@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
-  m_Name: 12_DreamweaverData
+  m_Name: 19_Psyche'sTouchData
   m_EditorClassIdentifier: 
-  ID: 12
-  icon: {fileID: 21300000, guid: 8e7ab7a692c7a554695711a0e9fa52fd, type: 3}
+  ID: 0
+  icon: {fileID: 21300000, guid: 10bad90e9587670429e4ae74bdb86a64, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
-  cardName: Dreamweaver
+  cardName: Psyche's Touch
   stamCost: 1
-  effectAmount: 6
-  cardDes: Deal 6 Damage. If the target is inflicted by <color=purple>Endless Dream</color>,
-    deal 12 Damage and gain 1 Energy
-  cardType: 0
+  effectAmount: 0
+  cardDes: Sleep a single enemy for a turn
+  cardType: 2
