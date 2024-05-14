@@ -48,6 +48,11 @@ public class BasePlayer : MonoBehaviour
         blockAmount += amount;
     }
 
+    public void RemoveBlock()
+    {
+        //at the start of turn, remove block
+        blockAmount = 0;
+    }
 
     public void HealUp(int health)
     {

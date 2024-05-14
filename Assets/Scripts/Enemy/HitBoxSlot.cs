@@ -31,9 +31,9 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             {
                 //find enemy behaviour within the dropped target
                 EnemyBehaviour enemyScript = GetComponent<EnemyBehaviour>();
-                
+
                 //only attack cards
-                if(data.cardType == CardData.CardType.Attack)
+                if (data.cardType == CardData.CardType.Attack)
                 {
                     //effect of the card on the enemy
                     switch (data.ID)
@@ -111,7 +111,12 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             Debug.Log("There is no Attack cards with this ID: " + data.ID);
                             break;
                     }
-                
+
+                }
+
+                else if (data.cardType == CardData.CardType.Defense)
+                {
+                    return;
                 }
             }
 
@@ -131,16 +136,23 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             break;
 
                         case 10: //Can only be placed if there are at least 3 Block Card at hand.
-                                 //All Blocksrecieved this turn will not be removed at the star of next turn
+                                 //All Blocks recieved this turn will not be removed at the star of next turn
 
-                            //Card defenseCard = data.cardType;
-                            //foreach(CardData.CardType.Defense in gameManager.playerDeck)
-                            //{
-
-                            //}
+                            int defenseCards = gameManager.GetDefenseCard();
+                            if (defenseCards >= 3)
+                            {
+                                gameManager.removeBlock = false;
+                            }
+                            else
+                                return;
                             break;
 
                         case 11: //Gain 6 and Moonlight effect for 2 turn
+                            playerScript.AddBlock(data.effectAmount);
+
+                            //this is very hard coded YES
+                            Status moonlight = playerScript.allStatus[2];
+                            playerScript.appliedStatus.Add(moonlight);
                             break;
                     }
                     

@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyList = new List<GameObject>();
     public int enemyInStage;
 
+    public bool removeBlock = true;
+
     void Start()
     {
         //selected char will be selected in another scene and bring over to this scene in a dont destroy script
@@ -109,6 +111,16 @@ public class GameManager : MonoBehaviour
             }
 
             //MoveCard();
+
+            //if keep the block for next turn
+            BasePlayer player = FindObjectOfType<BasePlayer>();
+            if (removeBlock)
+            {
+                player.RemoveBlock();
+            }
+            else
+                removeBlock = true;
+
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
@@ -162,6 +174,8 @@ public class GameManager : MonoBehaviour
                 i++;
             }
         }
+
+        Debug.Log("The number of defensive cards are: " + i);
         return i;
     }
 }

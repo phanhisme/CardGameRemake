@@ -1496,16 +1496,16 @@ MonoBehaviour:
   energy: 0
   energyText: {fileID: 1232079887}
   starterDeck:
-  - {fileID: 11400000, guid: 9fd40abc3c913ea48b55f806aa6ead2b, type: 2}
+  - {fileID: 11400000, guid: 06533816b13fef847999de23d8d6b274, type: 2}
   - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
   - {fileID: 11400000, guid: 384d39b1d35854249bb041e9c986d987, type: 2}
-  - {fileID: 11400000, guid: 3cf114491aa333849a8f0a48ed19d49a, type: 2}
   playerDeck: []
   discardedDeck: []
   enemyList:
   - {fileID: 1473888164}
   - {fileID: 1391498937}
   enemyInStage: 2
+  removeBlock: 1
 --- !u!114 &533502995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3658,7 +3658,13 @@ MonoBehaviour:
   blockAmount: 0
   text: {fileID: 1874143473}
   text2: {fileID: 775269425}
-  allStatus: []
+  allStatus:
+  - {fileID: 11400000, guid: 0c0003d679a6a6d43b91c05ceb333cc8, type: 2}
+  - {fileID: 11400000, guid: 32fbbf1927c033d4383abf7ece52c987, type: 2}
+  - {fileID: 11400000, guid: 373c914f2196e6b499fbf9751a81692e, type: 2}
+  - {fileID: 11400000, guid: cc9835594b095194a8f4d4eb7d45dbf8, type: 2}
+  - {fileID: 11400000, guid: 2c9c21896437a08459f514f09ada19fc, type: 2}
+  - {fileID: 11400000, guid: de395997d961b5c43ad7ade387d60576, type: 2}
   appliedStatus: []
 --- !u!114 &1368245244
 MonoBehaviour:
@@ -5407,6 +5413,7 @@ MonoBehaviour:
   discardedDeck: []
   enemyList: []
   enemyInStage: 0
+  removeBlock: 1
 --- !u!1 &1949231594
 GameObject:
   m_ObjectHideFlags: 0
