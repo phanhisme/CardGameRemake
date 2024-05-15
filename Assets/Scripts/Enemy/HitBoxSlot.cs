@@ -142,6 +142,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             if (defenseCards >= 3)
                             {
                                 gameManager.removeBlock = false;
+                                Debug.Log("Remove Block is " + gameManager.removeBlock);
                             }
                             else
                                 return;

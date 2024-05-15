@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         energyText.text = "" + energy.ToString();
+        Debug.Log(removeBlock);
     }
 
     public void PlayerTurn()
@@ -113,13 +114,17 @@ public class GameManager : MonoBehaviour
             //MoveCard();
 
             //if keep the block for next turn
+            removeBlock = false;
+            Debug.Log(removeBlock);
             BasePlayer player = FindObjectOfType<BasePlayer>();
             if (removeBlock)
             {
+                Debug.Log("Removing blocks");
                 player.RemoveBlock();
             }
             else
-                removeBlock = true;
+                Debug.Log("Do not remove block");
+                //removeBlock = true;
 
             turn = Turn.Enemy;
             EnemyTurn();
@@ -129,14 +134,12 @@ public class GameManager : MonoBehaviour
     }
     private void EnemyTurn()
     {
-        Debug.Log(turn);
         if (turn == Turn.Enemy)
         {
             //StartCoroutine(WaitForSeconds(0.5f));
             GameObject[] enemyL = GameObject.FindGameObjectsWithTag("Enemy");
             foreach (GameObject entity in enemyL)
             {
-                Debug.Log(entity.name);
                 EnemyBehaviour e = entity.GetComponent<EnemyBehaviour>();
                 e.ChooseNextAction();
                 StartCoroutine(WaitForSeconds(0.5f));

@@ -1497,8 +1497,8 @@ MonoBehaviour:
   energyText: {fileID: 1232079887}
   starterDeck:
   - {fileID: 11400000, guid: 06533816b13fef847999de23d8d6b274, type: 2}
-  - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
-  - {fileID: 11400000, guid: 384d39b1d35854249bb041e9c986d987, type: 2}
+  - {fileID: 11400000, guid: e96930360a84a4d4286f7b3159c18770, type: 2}
+  - {fileID: 11400000, guid: c66a438a32c04f9488f6423e639298ca, type: 2}
   playerDeck: []
   discardedDeck: []
   enemyList:
@@ -3720,7 +3720,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1391498937}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -3863,7 +3863,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1473888164}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
