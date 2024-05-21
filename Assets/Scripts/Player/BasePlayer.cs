@@ -26,6 +26,8 @@ public class BasePlayer : MonoBehaviour
     {
         text.text = playerHealth.ToString();
         text2.text = blockAmount.ToString();
+
+        ApplyCard();
     }
 
     public void TakeDamage(int damage)
@@ -68,6 +70,8 @@ public class BasePlayer : MonoBehaviour
         else
             return false;
     }
+
+    public void ApplyCard()
 
     
 }

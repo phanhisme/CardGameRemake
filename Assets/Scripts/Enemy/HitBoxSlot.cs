@@ -35,6 +35,12 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 //only attack cards
                 if (data.cardType == CardData.CardType.Attack)
                 {
+                    bool strength = playerScript.appliedStatus.Contains(playerScript.allStatus[0]);
+                    if (strength)
+                    {
+                        data.effectAmount += 2;
+                    }
+
                     //effect of the card on the enemy
                     switch (data.ID)
                     {
@@ -63,7 +69,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             bool enlessDream = enemyScript.appliedStatus.Contains(enemyScript.allStatus[1]);
 
                             //remember to remove the applied effects on the enemies!
-                            Debug.Log(enlessDream);
                             if (enlessDream)
                             {
                                 enemyScript.TakeDamage(data.effectAmount * 2);
@@ -155,10 +160,43 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             Status moonlight = playerScript.allStatus[2];
                             playerScript.appliedStatus.Add(moonlight);
                             break;
+
+                        default:
+                            return;
                     }
                     
                 }
-                
+
+                if (data.cardType == CardData.CardType.Skill)
+                {
+                    switch (data.ID)
+                    {
+                        case 05: //Gain half of the Blocks but double the Attack in the next turn
+                            
+                            Effect(data);
+
+                            break;
+
+                        case 06: //Gain Strength for 2 turn
+                                playerScript.appliedStatus.Add(playerScript.allStatus[0]);
+
+                            break;
+
+                        case 08: //take 1 health and draw a card
+
+                            break;
+
+                        case 13://Heals 2 Health at the end of turn for 3 turns.
+                                //If the player is at max health, the amount overheal will grant the player Lullaby effect
+                            break;
+
+                        case 20://From a cocoon to Butterfly, if the player is defeated, they will restore 10 Health and return to the battle.
+                                //Recieve "Mark of Rebirth" after reborn
+                            break;
+                    }
+                }
+
+
 
             }
 
@@ -221,5 +259,10 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 Debug.Log("You are calling a null effect, check the code again");
                 break;
         }
+    }
+
+    public void Effect(CardData card)
+    {
+        //will be called next turn
     }
 }

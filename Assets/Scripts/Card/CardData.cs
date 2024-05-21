@@ -15,6 +15,7 @@ public class CardData : ScriptableObject
 
     public int stamCost;
     public int effectAmount;
+    public int duration; //turn
 
     public string cardDes;
     public CardType cardType;
