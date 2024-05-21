@@ -1499,6 +1499,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 06533816b13fef847999de23d8d6b274, type: 2}
   - {fileID: 11400000, guid: e96930360a84a4d4286f7b3159c18770, type: 2}
   - {fileID: 11400000, guid: c66a438a32c04f9488f6423e639298ca, type: 2}
+  - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
+  - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
   playerDeck: []
   discardedDeck: []
   enemyList:
@@ -3665,6 +3667,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cc9835594b095194a8f4d4eb7d45dbf8, type: 2}
   - {fileID: 11400000, guid: 2c9c21896437a08459f514f09ada19fc, type: 2}
   - {fileID: 11400000, guid: de395997d961b5c43ad7ade387d60576, type: 2}
+  - {fileID: 11400000, guid: 366f8ea628c36084d8766563c649f70e, type: 2}
   appliedStatus: []
 --- !u!114 &1368245244
 MonoBehaviour:

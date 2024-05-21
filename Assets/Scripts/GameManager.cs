@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public List<Card> discardedDeck = new List<Card>();
 
     public List<GameObject> enemyList = new List<GameObject>();
-    public int enemyInStage;
+    public List<GameObject> enemyInStage = new List<GameObject>();
 
     public bool removeBlock = true;
 
@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
     {
         energyText.text = "" + energy.ToString();
         Debug.Log(removeBlock);
+    }
+
+    public void SpawnEnemies()
+    {
+        //choose to spawn which and how many enemies in stage (can this be random?)
     }
 
     public void PlayerTurn()
@@ -108,7 +113,8 @@ public class GameManager : MonoBehaviour
             if (character == CharacterSelection.Character.Dabria)
             {
                 DabriaStarterRelic relic = FindObjectOfType<DabriaStarterRelic>();
-                relic.DabRelicEffect();
+                //effect after fight, not turn
+                //relic.DabRelicEffect();
             }
 
             //MoveCard();
@@ -149,6 +155,16 @@ public class GameManager : MonoBehaviour
             //turn = Turn.Player;
             //energy = selectedChar.energy;
         }
+    }
+
+    public void EndFight()
+    {
+        if (enemyList == null)
+        {
+            //all enemies are dead
+            //Banner fight end
+        }
+        //else if (player){
     }
 
     public void MoveCard()

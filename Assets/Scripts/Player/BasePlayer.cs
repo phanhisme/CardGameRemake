@@ -26,8 +26,6 @@ public class BasePlayer : MonoBehaviour
     {
         text.text = playerHealth.ToString();
         text2.text = blockAmount.ToString();
-
-        ApplyCard();
     }
 
     public void TakeDamage(int damage)
@@ -36,12 +34,22 @@ public class BasePlayer : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            Debug.Log("You lose...");
-            
-            //anim.SetTrigger("isDead");
-            //Destroy(this.gameObject);
+            if (!ReBirth())
+            {
+                Debug.Log("You lose...");
 
-            //restart or return to main menu
+                //anim.SetTrigger("isDead");
+                //Destroy(this.gameObject);
+
+                //restart or return to main menu
+            }
+            else
+            {
+                playerHealth += 10;
+                Debug.Log("You continue your journey");
+                appliedStatus.Remove(allStatus[0]);
+            }
+
         }
     }
 
@@ -71,7 +79,20 @@ public class BasePlayer : MonoBehaviour
             return false;
     }
 
-    public void ApplyCard()
+    public int OverhealValue(int value)
+    {
+        return value - character.maxHealth;
+    }
+
+    public bool ReBirth()
+    {
+        if (appliedStatus.Contains(allStatus[6]))
+        {
+            return true;
+        }
+        else
+            return false;
+    }
 
     
 }

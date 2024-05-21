@@ -49,12 +49,12 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             break;
 
                         case 07: //If there is 1 enemy, deal 24 damage. If more than 1, deal 12 each
-                            if (gameManager.enemyInStage <= 1)
+                            if (gameManager.enemyInStage.Count <= 1)
                             {
                                 enemyScript.TakeDamage(data.effectAmount * 2); //24 damage
                             }
 
-                            else if (gameManager.enemyInStage > 1)
+                            else if (gameManager.enemyInStage.Count > 1)
                             {
                                 GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
                                 foreach (GameObject entity in enemy)
