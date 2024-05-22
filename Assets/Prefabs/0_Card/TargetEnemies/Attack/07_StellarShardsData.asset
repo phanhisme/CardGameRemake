@@ -18,6 +18,8 @@ MonoBehaviour:
   cardName: Stellar Shards
   stamCost: 3
   effectAmount: 12
+  duration: 0
   cardDes: If there is 1 enemy, deal 24 damage. If there are more than 1, deal 12
     damage each
   cardType: 0
+  cardTarget: 1

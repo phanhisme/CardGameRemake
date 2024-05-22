@@ -18,6 +18,8 @@ MonoBehaviour:
   cardName: Dreamweaver
   stamCost: 1
   effectAmount: 6
+  duration: 0
   cardDes: Deal 6 Damage. If the target is inflicted by <color=purple>Endless Dream</color>,
     deal double the damage and gain 1 Energy
   cardType: 0
+  cardTarget: 1

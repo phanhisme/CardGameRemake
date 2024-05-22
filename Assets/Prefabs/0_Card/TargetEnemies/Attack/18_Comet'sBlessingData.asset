@@ -18,6 +18,8 @@ MonoBehaviour:
   cardName: Comet's Blessing
   stamCost: 1
   effectAmount: 4
+  duration: 0
   cardDes: Deal 4 damage to all enemies and gain 4 extra Skill cards. These cards
     deal 4 single damage and exhaust after use
   cardType: 0
+  cardTarget: 1

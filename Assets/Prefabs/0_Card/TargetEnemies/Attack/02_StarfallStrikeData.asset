@@ -18,5 +18,7 @@ MonoBehaviour:
   cardName: Starfall Strike
   stamCost: 1
   effectAmount: 4
+  duration: 0
   cardDes: Deal 4 damage to a single enemy
   cardType: 0
+  cardTarget: 1

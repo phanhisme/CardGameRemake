@@ -12,11 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
   m_Name: 13_LullabyOfTheElvesData
   m_EditorClassIdentifier: 
+  ID: 13
   icon: {fileID: 21300000, guid: bf682d3d86c3b994cb4df96033281d3a, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
   cardName: Lullaby of the Elves
   stamCost: 2
   effectAmount: 2
+  duration: 0
   cardDes: Heals 2 Health at the end of turn for 3 turns. If the player is at max
     health, the amount overheal will grant the player<color=blue>Lullaby</color>
     effect

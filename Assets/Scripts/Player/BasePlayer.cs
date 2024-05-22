@@ -79,9 +79,25 @@ public class BasePlayer : MonoBehaviour
             return false;
     }
 
-    public int OverhealValue(int value)
+    public int OverhealValue()
     {
-        return value - character.maxHealth;
+        if (playerHealth <= character.maxHealth)
+        {
+            //do not trigger lullaby
+            return 0;
+        }
+        else
+            return playerHealth - character.maxHealth; //effect value = overheal amount
+    }
+
+    public void TakeHealth(int health)
+    {
+        if (playerHealth >= 1)
+        {
+            playerHealth -= health;
+        }
+        else
+            return;
     }
 
     public bool ReBirth()

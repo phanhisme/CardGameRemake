@@ -18,6 +18,8 @@ MonoBehaviour:
   cardName: Lunaris Lance
   stamCost: 2
   effectAmount: 6
+  duration: 0
   cardDes: Deal 6 Damage to all enemies. Heals Health equal to the unblocked damage
     dealt with this attack
   cardType: 0
+  cardTarget: 1

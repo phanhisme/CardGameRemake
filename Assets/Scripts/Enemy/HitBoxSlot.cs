@@ -33,7 +33,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 EnemyBehaviour enemyScript = GetComponent<EnemyBehaviour>();
 
                 //only attack cards
-                if (data.cardType == CardData.CardType.Attack)
+                if (data.cardTarget == CardData.CardTarget.Enemy)
                 {
                     bool strength = playerScript.appliedStatus.Contains(playerScript.allStatus[0]);
                     if (strength)
@@ -119,18 +119,18 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
                 }
 
-                else if (data.cardType == CardData.CardType.Defense)
-                {
+                else
                     return;
-                }
             }
 
             else if (gameObject.tag == "Player") //the reciever is player
             {
-                if(data.cardType == CardData.CardType.Defense)
+                if(data.cardTarget == CardData.CardTarget.Player)
                 {
                     switch (data.ID)
                     {
+                        //DEFENSE
+
                         case 03: //Gain 5 Blocks
                             playerScript.AddBlock(data.effectAmount);
                             break;
@@ -161,43 +161,58 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             playerScript.appliedStatus.Add(moonlight);
                             break;
 
-                        default:
-                            return;
-                    }
-                    
-                }
+                        //SKILLS
 
-                if (data.cardType == CardData.CardType.Skill)
-                {
-                    switch (data.ID)
-                    {
                         case 05: //Gain half of the Blocks but double the Attack in the next turn
-                            
-                            Effect(data);
 
                             break;
 
                         case 06: //Gain Strength for 2 turn
-                                playerScript.appliedStatus.Add(playerScript.allStatus[0]);
+                            //if player already have strength
+                            bool strengthInPlayer = playerScript.appliedStatus.Contains(playerScript.allStatus[0]);
+                            int remainingTurn = 0;
+                            if (!strengthInPlayer)
+                            {
+                                remainingTurn = data.duration;
+                            }
+                            else
+                                remainingTurn += 1;
 
+                            playerScript.appliedStatus.Add(playerScript.allStatus[0]);
                             break;
 
                         case 08: //take 1 health and draw a card
-
+                            playerScript.TakeDamage(1);
+                            gameManager.ShuffleDeck(1); //"DRAW"
                             break;
 
                         case 13://Heals 2 Health at the end of turn for 3 turns.
                                 //If the player is at max health, the amount overheal will grant the player Lullaby effect
+                            playerScript.HealUp(2);
+                            int lullabyValue = playerScript.OverhealValue();
+
+                            //only give effect if player is 
+                            if (lullabyValue > 0)
+                            {
+                                //get lullaby effect
+                            }
+
                             break;
 
                         case 20://From a cocoon to Butterfly, if the player is defeated, they will restore 10 Health and return to the battle.
-                                //Recieve "Mark of Rebirth" after reborn
+                                //Recieve "Mark of Rebirth" (until reborn)
+                            playerScript.appliedStatus.Add(playerScript.allStatus[6]);
                             break;
+
+                        default:
+                            return;
                     }
                 }
 
-
-
+                else
+                {
+                    return;
+                }
             }
 
             //if the effect carry out -> turn decrease
@@ -231,11 +246,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         }
     }
 
-    //public bool GainStrength()
-    //{
-    //    if()
-    //}
-
     public void AddingStatus(Status status)
     {
         switch (status.statusID)
@@ -259,10 +269,5 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 Debug.Log("You are calling a null effect, check the code again");
                 break;
         }
-    }
-
-    public void Effect(CardData card)
-    {
-        //will be called next turn
     }
 }

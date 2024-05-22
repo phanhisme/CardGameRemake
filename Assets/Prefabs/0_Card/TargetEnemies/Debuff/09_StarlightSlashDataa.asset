@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51391f24750de0f4e9b7477d332c270f, type: 3}
   m_Name: 09_StarlightSlashDataa
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 9
   icon: {fileID: 21300000, guid: 403b1a7fd0d43ab4c9c3e06c7158d7cf, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
   cardName: Starlight Slash
   stamCost: 1
   effectAmount: 6
+  duration: 0
   cardDes: 'Tag <color=purple>Endless Dream</color> to all enemies. Upon playing
     an Attack Card this turn, 6 <color=yellow> Dream Damage </color> will follow '
   cardType: 2
+  cardTarget: 1

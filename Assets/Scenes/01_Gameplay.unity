@@ -1496,17 +1496,14 @@ MonoBehaviour:
   energy: 0
   energyText: {fileID: 1232079887}
   starterDeck:
-  - {fileID: 11400000, guid: 06533816b13fef847999de23d8d6b274, type: 2}
-  - {fileID: 11400000, guid: e96930360a84a4d4286f7b3159c18770, type: 2}
-  - {fileID: 11400000, guid: c66a438a32c04f9488f6423e639298ca, type: 2}
   - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
-  - {fileID: 11400000, guid: 57f0cbc6168dbbf41b722a51745d4270, type: 2}
+  - {fileID: 11400000, guid: 076249f3ce3233747b097a1cb141a616, type: 2}
   playerDeck: []
   discardedDeck: []
   enemyList:
   - {fileID: 1473888164}
   - {fileID: 1391498937}
-  enemyInStage: 2
+  enemyInStage: []
   removeBlock: 1
 --- !u!114 &533502995
 MonoBehaviour:
@@ -5415,7 +5412,7 @@ MonoBehaviour:
   playerDeck: []
   discardedDeck: []
   enemyList: []
-  enemyInStage: 0
+  enemyInStage: []
   removeBlock: 1
 --- !u!1 &1949231594
 GameObject:

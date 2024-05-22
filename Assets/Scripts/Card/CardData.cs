@@ -19,9 +19,15 @@ public class CardData : ScriptableObject
 
     public string cardDes;
     public CardType cardType;
+    public CardTarget cardTarget;
 
     public enum CardType
     {
         Attack, Defense, Skill
+    }
+
+    public enum CardTarget
+    {
+        Player, Enemy
     }
 }
