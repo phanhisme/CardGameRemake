@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyInStage = new List<GameObject>();
 
     public bool removeBlock = true;
+    public bool nextTurn = false;
 
     void Start()
     {
@@ -44,7 +45,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         energyText.text = "" + energy.ToString();
-        Debug.Log(removeBlock);
     }
 
     public void SpawnEnemies()
@@ -136,6 +136,9 @@ public class GameManager : MonoBehaviour
             EnemyTurn();
             //run banner "Enemy's Turn"
 
+            //end of currentTurn - current turn = start status at next turn
+            nextTurn = false;
+
         }
     }
     private void EnemyTurn()
@@ -152,8 +155,13 @@ public class GameManager : MonoBehaviour
             }
 
             //run player's turn baner
-            //turn = Turn.Player;
-            //energy = selectedChar.energy;
+            turn = Turn.Player;
+            energy = selectedChar.energy;
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            EffectDuration effectScript = player.GetComponent<EffectDuration>();
+            effectScript.isNextTurn = true;
+            nextTurn = true;
         }
     }
 

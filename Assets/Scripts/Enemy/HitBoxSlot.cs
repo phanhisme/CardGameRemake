@@ -6,12 +6,13 @@ using UnityEngine.EventSystems;
 public class HitBoxSlot : MonoBehaviour, IDropHandler
 {
     public BasePlayer playerScript;
+    public EffectDuration effectScript;
 
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<BasePlayer>();
-
+        effectScript = player.GetComponent<EffectDuration>();
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -35,7 +36,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 //only attack cards
                 if (data.cardTarget == CardData.CardTarget.Enemy)
                 {
-                    bool strength = playerScript.appliedStatus.Contains(playerScript.allStatus[0]);
+                    bool strength = effectScript.appliedStatus.Contains(effectScript.allStatus[0]);
                     if (strength)
                     {
                         data.effectAmount += 2;
@@ -112,6 +113,10 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             }
                             break;
 
+                        case 19: //Sleep a single enemy for 2 turn. Only wake up if attacked by the player or end of Sleep
+                            enemyScript.appliedStatus.Add(enemyScript.allStatus[2]);
+                            break;
+
                         default:
                             Debug.Log("There is no Attack cards with this ID: " + data.ID);
                             break;
@@ -127,6 +132,19 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             {
                 if(data.cardTarget == CardData.CardTarget.Player)
                 {
+                    bool eclipse = effectScript.appliedStatus.Contains(effectScript.allStatus[7]);
+                    if (eclipse && gameManager.nextTurn)
+                    {
+                        if (data.cardType == CardData.CardType.Defense)
+                        {
+                            data.effectAmount = data.effectAmount / 2;
+                        }
+                        else if (data.cardType == CardData.CardType.Attack)
+                        {
+                            data.effectAmount = data.effectAmount * 2;
+                        }
+                    }
+
                     switch (data.ID)
                     {
                         //DEFENSE
@@ -157,28 +175,18 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             playerScript.AddBlock(data.effectAmount);
 
                             //this is very hard coded YES
-                            Status moonlight = playerScript.allStatus[2];
-                            playerScript.appliedStatus.Add(moonlight);
+                            Status moonlight = effectScript.allStatus[2];
+                            effectScript.appliedStatus.Add(moonlight);
                             break;
 
                         //SKILLS
 
                         case 05: //Gain half of the Blocks but double the Attack in the next turn
-
+                            effectScript.UpdateEffectUI(effectScript.allStatus[7]);
                             break;
 
                         case 06: //Gain Strength for 2 turn
-                            //if player already have strength
-                            bool strengthInPlayer = playerScript.appliedStatus.Contains(playerScript.allStatus[0]);
-                            int remainingTurn = 0;
-                            if (!strengthInPlayer)
-                            {
-                                remainingTurn = data.duration;
-                            }
-                            else
-                                remainingTurn += 1;
-
-                            playerScript.appliedStatus.Add(playerScript.allStatus[0]);
+                            effectScript.UpdateEffectUI(effectScript.allStatus[0]);
                             break;
 
                         case 08: //take 1 health and draw a card
@@ -201,7 +209,8 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
                         case 20://From a cocoon to Butterfly, if the player is defeated, they will restore 10 Health and return to the battle.
                                 //Recieve "Mark of Rebirth" (until reborn)
-                            playerScript.appliedStatus.Add(playerScript.allStatus[6]);
+                            effectScript.appliedStatus.Add(effectScript.allStatus[6]);
+                            effectScript.UpdateEffectUI(effectScript.allStatus[6]);
                             break;
 
                         default:
@@ -243,31 +252,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         else if (gameManager.energy == 0)
         {
             Debug.Log("You ran out of energy, cannot place more cards");
-        }
-    }
-
-    public void AddingStatus(Status status)
-    {
-        switch (status.statusID)
-        {
-            case "S02": //Strength: Gain 2 damage for physical attack / 2 turn
-                break;
-
-            case "S03": //Endless Dream: tag every enemies with Endless Dream, deal 6 dream damage if the player play attack card
-                break;
-
-            case "S04":
-                break;
-
-            case "S05":
-                break;
-
-            case "S06":
-                break;
-
-            default:
-                Debug.Log("You are calling a null effect, check the code again");
-                break;
         }
     }
 }

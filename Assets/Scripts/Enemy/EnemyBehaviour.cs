@@ -82,37 +82,50 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ChooseNextAction()
     {
+        bool isSlept = appliedStatus.Contains(allStatus[2]);
+
+        if (!isSlept)
+        {
+            //the enemy can hit the player for -- health or use special move
+            int rand = GetRandomAction();
+
+            switch (rand)
+            {
+                case 0:
+                    //Deal damage to player
+                    player.TakeDamage(enemyObject.damageDealt);
+                    break;
+
+                case 1:
+                    //Add defense
+                    block += 5;
+                    Debug.Log("new block = " + block);
+                    break;
+
+                case 2:
+                    //Gain Strength
+                    break;
+
+                case 3:
+                //...
+                default:
+                    Debug.Log("enemy - failed to choose action");
+                    break;
+            }
+        }
+        else
+        {
+            Debug.Log("This enemy is slept, skipping Turn");
+            return;
+        }
+       
+
         //while the enemy is above 50 health: 20% to buff, 35% to attack, 25% to def,20% to total random
         //after attacking, the chance to use defense is increased to 40%, random to attack
 
         //under 50 health, chance to heal up: 20%
 
-        //the enemy can hit the player for -- health or use special move
-        int rand = GetRandomAction();
-
-        switch (1)
-        {
-            case 0:
-                //Deal damage to player
-                player.TakeDamage(enemyObject.damageDealt);
-                break;
-
-            case 1:
-                //Add defense
-                block += 5;
-                Debug.Log("new block = " + block);
-                break;
-
-            case 2:
-                //Gain Strength
-                break;
-
-            case 3:
-                //...
-            default:
-                Debug.Log("enemy - failed to choose action");
-                break;
-        }
+        
         
     }
 

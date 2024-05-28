@@ -6,6 +6,7 @@ using TMPro;
 public class BasePlayer : MonoBehaviour
 {
     public ChooseCharacter character;
+    [SerializeField]private EffectDuration effectScript;
 
     [SerializeField] private int playerHealth;
     [SerializeField] private int blockAmount = 0;
@@ -13,12 +14,9 @@ public class BasePlayer : MonoBehaviour
     public TextMeshProUGUI text;
     public TextMeshProUGUI text2;
 
-    //keep track of the the buff/debuff
-    public List<Status> allStatus = new List<Status>();
-    public List<Status> appliedStatus = new List<Status>();
-
     void Start()
     {
+        effectScript = GetComponent<EffectDuration>();
         playerHealth = character.maxHealth;
     }
 
@@ -34,7 +32,7 @@ public class BasePlayer : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            if (!ReBirth())
+            if (!effectScript.ReBirth())
             {
                 Debug.Log("You lose...");
 
@@ -47,7 +45,7 @@ public class BasePlayer : MonoBehaviour
             {
                 playerHealth += 10;
                 Debug.Log("You continue your journey");
-                appliedStatus.Remove(allStatus[0]);
+                effectScript.appliedStatus.Remove(effectScript.allStatus[0]);
             }
 
         }
@@ -99,16 +97,4 @@ public class BasePlayer : MonoBehaviour
         else
             return;
     }
-
-    public bool ReBirth()
-    {
-        if (appliedStatus.Contains(allStatus[6]))
-        {
-            return true;
-        }
-        else
-            return false;
-    }
-
-    
 }
