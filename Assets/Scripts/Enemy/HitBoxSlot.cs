@@ -209,7 +209,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
                         case 20://From a cocoon to Butterfly, if the player is defeated, they will restore 10 Health and return to the battle.
                                 //Recieve "Mark of Rebirth" (until reborn)
-                            effectScript.appliedStatus.Add(effectScript.allStatus[6]);
                             effectScript.UpdateEffectUI(effectScript.allStatus[6]);
                             break;
 

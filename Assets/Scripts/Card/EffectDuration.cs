@@ -43,13 +43,25 @@ public class EffectDuration : MonoBehaviour
 
     public void UpdateEffectUI(Status status)
     {
-        StatusUI UIUpdate = effectPrefab.GetComponent<StatusUI>();
-        UIUpdate.chosenStatus = status;
-        Debug.Log(UIUpdate.chosenStatus);
-
         if (appliedStatus.Contains(status))
         {
-            UIUpdate.AddTurn();
+            StatusUI ui = GetComponentInChildren<StatusUI>();
+            ui.chosenStatus=status;
+            switch (ui.chosenStatus.statusID)
+            {
+                case "S02": //stregth
+                    ui.currentDuration += 1;
+                    ui.turnLeft.text = ui.currentDuration.ToString();
+                    break;
+
+                case "S09": //stregth
+                    ui.currentDuration += 1;
+                    ui.turnLeft.text = ui.currentDuration.ToString();
+                    break;
+            }
+
+            //ui.currentDuration += 1;
+            //ui.turnLeft.text = ui.currentDuration.ToString();
         }
         else
         {
@@ -58,8 +70,12 @@ public class EffectDuration : MonoBehaviour
             //create the icon with its duration number
             appliedStatus.Add(status);
 
-            UIUpdate.GetInitialData();
+            StatusUI ui = effectPrefab.GetComponent<StatusUI>();
+            ui.GetInitialData(status);
+
             Instantiate(effectPrefab, effectUIHolder.transform);
+
+            
         }
     }
 

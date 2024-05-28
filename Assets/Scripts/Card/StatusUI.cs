@@ -7,36 +7,27 @@ using TMPro;
 public class StatusUI : MonoBehaviour
 {
     public Status chosenStatus;
-
-    [SerializeField] private int currentDuration;
+    public int currentDuration;
 
     public Image effectIcon;
     public TextMeshProUGUI turnLeft;
 
-    public void GetInitialData()
+    public void GetInitialData(Status status)
     {
-        currentDuration = chosenStatus.effectDuration;
-        effectIcon.sprite = chosenStatus.effectIcon;
+        currentDuration = status.effectDuration;
+        turnLeft.text = currentDuration.ToString();
+        effectIcon.sprite = status.effectIcon;
     }
 
     public void Update()
     {
-        turnLeft.text = currentDuration.ToString();
-        //GameManager gm = FindObjectOfType<GameManager>();
 
-        if (chosenStatus != null)
-        {
-            
-        }
-
-        if (currentDuration == 0)
-        {
-            Destroy(gameObject);
-        }
     }
 
-    public void AddTurn()
+    public void AddTurn(Status status)
     {
         currentDuration += 1;
+        turnLeft.text = currentDuration.ToString();
+        Debug.Log("Turn of " + status + "is now " + currentDuration);
     }
 }
