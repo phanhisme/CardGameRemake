@@ -7,27 +7,35 @@ using TMPro;
 public class StatusUI : MonoBehaviour
 {
     public Status chosenStatus;
+
+    public int initialDuration;
     public int currentDuration;
 
     public Image effectIcon;
     public TextMeshProUGUI turnLeft;
 
+    public GameObject infoPanel;
+    public TextMeshProUGUI infoText;
+
     public void GetInitialData(Status status)
     {
-        currentDuration = status.effectDuration;
-        turnLeft.text = currentDuration.ToString();
         effectIcon.sprite = status.effectIcon;
+
+        initialDuration = status.effectDuration;
+        turnLeft.text = initialDuration.ToString();
+        
+        currentDuration = initialDuration;
+        
+        infoText.text = status.effectDescription;
     }
 
-    public void Update()
+    public void GetInfoOnHover()
     {
-
+        infoPanel.SetActive(true);
     }
 
-    public void AddTurn(Status status)
+    public void OffHover()
     {
-        currentDuration += 1;
-        turnLeft.text = currentDuration.ToString();
-        Debug.Log("Turn of " + status + "is now " + currentDuration);
+        infoPanel.SetActive(false);
     }
 }

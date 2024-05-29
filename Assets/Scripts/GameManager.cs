@@ -29,17 +29,12 @@ public class GameManager : MonoBehaviour
     public List<GameObject> enemyList = new List<GameObject>();
     public List<GameObject> enemyInStage = new List<GameObject>();
 
-    public bool removeBlock = true;
-    public bool nextTurn = false;
-
     void Start()
     {
         //selected char will be selected in another scene and bring over to this scene in a dont destroy script
         //for now we will use public char {dabria} for testing
 
         //player starts turn first
-
-        
     }
 
     void Update()
@@ -90,16 +85,9 @@ public class GameManager : MonoBehaviour
             //find scriptable
             OnDeckBehaviour onDeck = thisCard.GetComponent<OnDeckBehaviour>();
             onDeck.SetCardData(cardData);
-            
+            onDeck.FindCard(card);
+
             playerDeck.Add(card);
-        }
-    }
-
-    public void StartPlayerTurn()
-    {
-        if (turn == Turn.Player)
-        {
-
         }
     }
 
@@ -120,24 +108,16 @@ public class GameManager : MonoBehaviour
             //MoveCard();
 
             //if keep the block for next turn
-            removeBlock = false;
-            Debug.Log(removeBlock);
-            BasePlayer player = FindObjectOfType<BasePlayer>();
-            if (removeBlock)
-            {
-                Debug.Log("Removing blocks");
-                player.RemoveBlock();
-            }
-            else
-                Debug.Log("Do not remove block");
-                //removeBlock = true;
+            CheckBlockStatus();
 
             turn = Turn.Enemy;
             EnemyTurn();
             //run banner "Enemy's Turn"
 
             //end of currentTurn - current turn = start status at next turn
-            nextTurn = false;
+
+            EffectDuration effectDuration = FindObjectOfType<EffectDuration>();
+            effectDuration.RemoveTurn();
 
         }
     }
@@ -160,8 +140,7 @@ public class GameManager : MonoBehaviour
 
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             EffectDuration effectScript = player.GetComponent<EffectDuration>();
-            effectScript.isNextTurn = true;
-            nextTurn = true;
+            effectScript.CheckLullaby();
         }
     }
 
@@ -173,17 +152,6 @@ public class GameManager : MonoBehaviour
             //Banner fight end
         }
         //else if (player){
-    }
-
-    public void MoveCard()
-    {
-        //THIS IS NOT WORKING!
-
-        //discardedDeck.AddRange(playerDeck);
-        //Debug.Log(discardedDeck.Count);
-        //playerDeck.Clear();
-        //Debug.Log(playerDeck.Count);
-        
     }
 
     IEnumerator WaitForSeconds(float waitTime)
@@ -204,5 +172,20 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("The number of defensive cards are: " + i);
         return i;
+    }
+
+    public void CheckBlockStatus()
+    {
+        EffectDuration effectManager = FindObjectOfType<EffectDuration>();
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        BasePlayer playerScript = player.GetComponent<BasePlayer>();
+
+        if (!effectManager.appliedStatus.Contains(effectManager.allStatus[7]))
+        {
+            Debug.Log("Removing blocks");
+            playerScript.RemoveBlock();
+        }
+        else
+            Debug.Log("Do not remove block");
     }
 }

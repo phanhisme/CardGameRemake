@@ -15,6 +15,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     private Vector2 originalPosition;
 
     //card type
+    public Card card;
     public CardData cardData;
 
     private void Start()
@@ -93,6 +94,11 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void SetCardData(CardData data)
     {
         cardData = data;
+    }
+
+    public void FindCard(Card cardToFind)
+    {
+        card = cardToFind;
     }
 
     public IEnumerator GetCardPosition()

@@ -44,8 +44,8 @@ public class BasePlayer : MonoBehaviour
             else
             {
                 playerHealth += 10;
-                Debug.Log("You continue your journey");
-                effectScript.appliedStatus.Remove(effectScript.allStatus[0]);
+                Debug.Log("You continue your journey... Mark of Rebirth is removed from your inventory");
+                //effectScript.appliedStatus.Remove(effectScript.allStatus[]);
             }
 
         }

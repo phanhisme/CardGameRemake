@@ -20,5 +20,5 @@ MonoBehaviour:
   effectAmount: 0
   duration: 0
   cardDes: Gain half of the <color=blue>Blocks</color> but double the <color=red>Attack</color>
-    in the next turn
   cardType: 2
+  cardTarget: 0

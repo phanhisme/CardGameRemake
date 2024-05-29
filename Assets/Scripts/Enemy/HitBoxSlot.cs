@@ -22,6 +22,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         //setting scriptable
         OnDeckBehaviour thisCard = gameManager.selectedCard;
         CardData data = thisCard.cardData;
+        Card card = thisCard.card;
 
         //Debug.Log("OnDrop");
         if (eventData.pointerDrag != null && gameManager.energy >= data.stamCost)
@@ -36,8 +37,8 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 //only attack cards
                 if (data.cardTarget == CardData.CardTarget.Enemy)
                 {
-                    bool strength = effectScript.appliedStatus.Contains(effectScript.allStatus[0]);
-                    if (strength)
+                    bool strengthActive = effectScript.appliedStatus.Contains(effectScript.allStatus[0]);
+                    if (strengthActive)
                     {
                         data.effectAmount += 2;
                     }
@@ -132,8 +133,15 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             {
                 if(data.cardTarget == CardData.CardTarget.Player)
                 {
-                    bool eclipse = effectScript.appliedStatus.Contains(effectScript.allStatus[7]);
-                    if (eclipse && gameManager.nextTurn)
+                    //set status
+                    Status strength = effectScript.allStatus[0];
+                    Status moonlight = effectScript.allStatus[2];
+                    Status lullaby = effectScript.allStatus[3];
+                    Status eclipse = effectScript.allStatus[6];
+                    Status remainBlock = effectScript.allStatus[7];
+
+                    bool eclipseActive = effectScript.appliedStatus.Contains(eclipse);
+                    if (eclipseActive)
                     {
                         if (data.cardType == CardData.CardType.Defense)
                         {
@@ -143,6 +151,23 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                         {
                             data.effectAmount = data.effectAmount * 2;
                         }
+                    }
+
+                    bool lullabyActive = effectScript.appliedStatus.Contains(lullaby);
+                    if (lullabyActive)
+                    {
+                        int lullabyValue = playerScript.OverhealValue();
+                        //only give effect if player is 
+                        if (lullabyValue > 0)
+                        {
+                            //get lullaby effect
+                            if (data.cardType == CardData.CardType.Defense)
+                            {
+                                data.effectAmount += lullabyValue;
+                                lullabyValue = 0;
+                                Debug.Log(lullabyValue);
+                            }
+                        } 
                     }
 
                     switch (data.ID)
@@ -162,31 +187,49 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                                  //All Blocks recieved this turn will not be removed at the star of next turn
 
                             int defenseCards = gameManager.GetDefenseCard();
-                            if (defenseCards >= 3)
+                            
+
+                            if (effectScript.ReturnCard(remainBlock))
                             {
-                                gameManager.removeBlock = false;
-                                Debug.Log("Remove Block is " + gameManager.removeBlock);
+                                Debug.Log("This effect will not stack, return card");
+                                return;
                             }
                             else
-                                return;
+                            {
+                                if (defenseCards >= 3)
+                                {
+                                    //add status
+                                    effectScript.UpdateEffectUI(remainBlock);
+                                }
+                                else
+                                    return;
+                            }
                             break;
 
                         case 11: //Gain 6 and Moonlight effect for 2 turn
                             playerScript.AddBlock(data.effectAmount);
 
                             //this is very hard coded YES
-                            Status moonlight = effectScript.allStatus[2];
+                            
                             effectScript.appliedStatus.Add(moonlight);
                             break;
 
                         //SKILLS
 
-                        case 05: //Gain half of the Blocks but double the Attack in the next turn
-                            effectScript.UpdateEffectUI(effectScript.allStatus[7]);
+                        case 05: //Gain half of the Blocks but double the Attack
+                           
+                            if (effectScript.ReturnCard(eclipse))
+                            {
+                                Debug.Log("This effect is already active and cannot stack, returning card");
+                                return;
+                            }
+                            else
+                                effectScript.UpdateEffectUI(eclipse);
                             break;
 
                         case 06: //Gain Strength for 2 turn
-                            effectScript.UpdateEffectUI(effectScript.allStatus[0]);
+                            
+                            effectScript.UpdateEffectUI(strength);
                             break;
 
                         case 08: //take 1 health and draw a card
@@ -196,13 +239,15 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
                         case 13://Heals 2 Health at the end of turn for 3 turns.
                                 //If the player is at max health, the amount overheal will grant the player Lullaby effect
-                            playerScript.HealUp(2);
-                            int lullabyValue = playerScript.OverhealValue();
-
-                            //only give effect if player is 
-                            if (lullabyValue > 0)
+                            if (effectScript.ReturnCard(lullaby))
                             {
-                                //get lullaby effect
+                                Debug.Log("This effect is already active and cannot stack, returning card");
+                                return;
+                            }
+                            else
+                            {
+                                playerScript.HealUp(10);
+                                effectScript.UpdateEffectUI(lullaby);
                             }
 
                             break;
@@ -230,14 +275,18 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //Instantiate(testPrefab, eventData.pointerDrag.transform.parent);
             Destroy(eventData.pointerDrag.gameObject);
 
+            //discard cards
+            gameManager.discardedDeck.Add(card);
+            gameManager.playerDeck.Remove(card);
+
             //cards needs to find their new locations since the first card is destroyed
             //thus, they spread differently
             OnDeckBehaviour[] remainingCards = FindObjectsOfType<OnDeckBehaviour>();
 
-            foreach (OnDeckBehaviour card in remainingCards)
+            foreach (OnDeckBehaviour onDeck in remainingCards)
             {
                 //resetting position of the remaining cards
-                card.SetPosition();
+                onDeck.SetPosition();
             }
 
             //minus energy based on the stam cost

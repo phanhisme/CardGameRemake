@@ -16,5 +16,5 @@ MonoBehaviour:
   effectName: Mark of Rebirth
   effectIcon: {fileID: 0}
   effectDescription: Revive the player with 10 Health upon first lethal damage.
-  effectDuration: 0
+  effectDuration: 999
   effectType: 0

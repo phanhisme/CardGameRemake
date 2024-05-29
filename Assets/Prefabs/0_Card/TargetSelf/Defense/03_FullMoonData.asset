@@ -18,5 +18,7 @@ MonoBehaviour:
   cardName: Full Moon
   stamCost: 1
   effectAmount: 5
+  duration: 0
   cardDes: Gain 5 <color=blue>Blocks</color>
   cardType: 1
+  cardTarget: 0

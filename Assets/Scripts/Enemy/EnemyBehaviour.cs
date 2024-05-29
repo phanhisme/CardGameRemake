@@ -89,7 +89,7 @@ public class EnemyBehaviour : MonoBehaviour
             //the enemy can hit the player for -- health or use special move
             int rand = GetRandomAction();
 
-            switch (rand)
+            switch (1)
             {
                 case 0:
                     //Deal damage to player
