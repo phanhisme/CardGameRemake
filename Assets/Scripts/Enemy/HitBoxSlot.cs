@@ -246,7 +246,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             }
                             else
                             {
-                                playerScript.HealUp(10);
+                                playerScript.HealUp(2);
                                 effectScript.UpdateEffectUI(lullaby);
                             }
 

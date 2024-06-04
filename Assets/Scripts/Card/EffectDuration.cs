@@ -82,8 +82,7 @@ public class EffectDuration : MonoBehaviour
     {
         if (appliedStatus.Contains(allStatus[3]))
         {
-            playerScript.HealUp(10);
-            Debug.Log("Lullaby Value is " + playerScript.OverhealValue());
+            playerScript.HealUp(2);
         }
     }
 

@@ -15,6 +15,6 @@ MonoBehaviour:
   statusID: S02
   effectName: Stregth
   effectIcon: {fileID: 21300000, guid: 73ed977e91ecd0e44ab8f14dc6559c13, type: 3}
-  effectDescription: Gain 2 damage for physical attack
+  effectDescription: Gain 2 attack
   effectDuration: 2
   effectType: 0

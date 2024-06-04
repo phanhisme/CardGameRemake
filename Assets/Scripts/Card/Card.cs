@@ -6,4 +6,9 @@ using UnityEngine;
 public class Card : ScriptableObject
 {
     public CardData data;
+
+    public int maxNumber;
+    public CardStatus currentStatus;
+
+    public enum CardStatus { UNLOCKED,LOCKED};
 }

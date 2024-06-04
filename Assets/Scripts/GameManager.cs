@@ -31,10 +31,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //selected char will be selected in another scene and bring over to this scene in a dont destroy script
-        //for now we will use public char {dabria} for testing
+        Deckbuilding deck = FindObjectOfType<Deckbuilding>();
+        foreach (Card card in deck.tempList)
+        {
+            starterDeck.Add(card);
+        }
 
-        //player starts turn first
+        deck.tempList.Clear();
     }
 
     void Update()
