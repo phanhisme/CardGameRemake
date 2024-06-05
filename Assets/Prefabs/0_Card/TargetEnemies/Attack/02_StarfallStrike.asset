@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 02_StarfallStrike
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7edfb9751cfd7ef4eb09cd4b2f2a166c, type: 2}
+  maxNumber: 3
+  currentStatus: 0
