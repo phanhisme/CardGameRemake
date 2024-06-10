@@ -7,6 +7,8 @@ public class EnemyScriptableObject : ScriptableObject
 {
     public string enemyName;
 
+    public Sprite enemyImage;
+
     public int maxHealth;
     public int damageDealt;
 

@@ -10,7 +10,7 @@ public class EnemyBehaviour : MonoBehaviour
     private InGameCurrency currencyScript;
     public BasePlayer player;
 
-    private Image enemyImage;
+    public Image enemyImage;
     public TextMeshProUGUI enemyName;
 
     public int health; //keep track of the enemy, using to only keep the max health of the enemy and not the current health
@@ -18,6 +18,10 @@ public class EnemyBehaviour : MonoBehaviour
 
     public int block;
     public TextMeshProUGUI blockDisplay;
+
+    public List<Sprite> intention = new List<Sprite>();
+    public GameObject intentionObject;
+    public int nextActionValue;
 
     private Animator anim;
 
@@ -29,12 +33,12 @@ public class EnemyBehaviour : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         currencyScript = FindObjectOfType<InGameCurrency>();
-        //player = FindObjectOfType<BasePlayer>();
+        player = FindObjectOfType<BasePlayer>();
 
+        enemyObject = ChooseEnemies();
         health = enemyObject.maxHealth;
-        
         enemyName.text = enemyObject.enemyName;
-
+        enemyImage.sprite = enemyObject.enemyImage;
     }
 
     void Update()
@@ -43,6 +47,14 @@ public class EnemyBehaviour : MonoBehaviour
 
         healthDisplay.text = health.ToString();
         blockDisplay.text = block.ToString();
+    }
+
+    public EnemyScriptableObject ChooseEnemies()
+    {
+        GameManager gm = FindObjectOfType<GameManager>();
+        int randValue = Random.Range(0, gm.enemyList.Count);
+
+        return enemyObject = gm.enemyList[randValue];
     }
 
     public void TakeDamage(int damageAmount)
@@ -91,35 +103,45 @@ public class EnemyBehaviour : MonoBehaviour
                 case EnemyScriptableObject.EnemyType.Mushroom:
 
                     //the enemy can hit the player for -- health or use special move
-                    int rand = GetRandomAction();
-                    switch (rand)
+                    if (nextActionValue == 0)
                     {
-                        case 0:
-                            //Deal damage to player
-                            player.TakeDamage(enemyObject.damageDealt);
-                            break;
+                        nextActionValue = GetRandomAction();
+                    }
+                    else
+                    {
+                        switch (nextActionValue)
+                        {
+                            case 0:
+                                //Deal damage to player
+                                player.TakeDamage(enemyObject.damageDealt);
+                                break;
 
-                        case 1:
-                            //Add defense
-                            block += 5;
-                            Debug.Log("new block = " + block);
-                            break;
+                            case 1:
+                                //Add defense
+                                block += 5;
+                                Debug.Log("new block = " + block);
+                                break;
 
-                        case 2:
-                            //Gain Strength
-                            break;
+                            case 2:
+                                //Gain Strength
+                                break;
 
-                        case 3:
-                            //apply toxic debuff on the player
-                            break;
+                            case 3:
+                                //apply toxic debuff on the player
+                                break;
 
-                        default:
-                            Debug.Log(enemyName + "- failed to choose action");
-                            break;
+                            default:
+                                Debug.Log(enemyName + "- failed to choose action");
+                                break;
+                        }
+
+                        //choose next action value:
+                        nextActionValue = GetRandomAction();
+                        Image thisImage = intentionObject.GetComponent<Image>();
+                        thisImage.sprite = intention[nextActionValue];
                     }
 
                     break;
-
             }
         }
         else
@@ -133,9 +155,6 @@ public class EnemyBehaviour : MonoBehaviour
         //after attacking, the chance to use defense is increased to 40%, random to attack
 
         //under 50 health, chance to heal up: 20%
-
-        
-        
     }
 
     public int GetRandomAction()

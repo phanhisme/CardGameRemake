@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Mutated Mushroom
   m_EditorClassIdentifier: 
   enemyName: Mutated Mushroom
+  enemyImage: {fileID: 1211765144, guid: 9ecc7bfacb805d641b00c744cfa6b672, type: 3}
   maxHealth: 20
   damageDealt: 10
   coinDrop: 20
-  speed: 3
+  behaviourType: 0

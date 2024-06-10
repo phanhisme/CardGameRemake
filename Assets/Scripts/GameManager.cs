@@ -27,10 +27,15 @@ public class GameManager : MonoBehaviour
     public List<Card> playerDeck = new List<Card>();
     public List<Card> discardedDeck = new List<Card>();
 
-    public List<GameObject> enemyList = new List<GameObject>();
-    public List<GameObject> enemyInStage = new List<GameObject>();
+    public List<EnemyScriptableObject> enemyList = new List<EnemyScriptableObject>();
+    public List<EnemyScriptableObject> enemyInStage = new List<EnemyScriptableObject>();
+    public GameObject enemyObject;
     public Transform enemyHolder;
 
+    private void Start()
+    {
+        SpawnEnemies();
+    }
     void Update()
     {
         energyText.text = energy.ToString();
@@ -45,18 +50,19 @@ public class GameManager : MonoBehaviour
             //spawn 2
             for (int i = 0; i < 2; i++)
             {
-                int randValue = Random.Range(0, enemyList.Count);
+                //spawn object
+                GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
+                EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
 
-                GameObject enemyToSpawn = Instantiate(enemyList[randValue], enemyHolder);
-                enemyInStage.Add(enemyToSpawn);
+                enemyInStage.Add(eBehaviour.enemyObject);
             }
         }
         else
         {
-            int randValue = Random.Range(0, enemyList.Count);
+            GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
+            EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
 
-            GameObject enemyToSpawn = Instantiate(enemyList[randValue], enemyHolder);
-            enemyInStage.Add(enemyToSpawn);
+            enemyInStage.Add(eBehaviour.enemyObject);
         }
     }
 
