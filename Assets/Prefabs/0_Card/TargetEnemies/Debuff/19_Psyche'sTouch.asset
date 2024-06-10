@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 19_Psyche'sTouch
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 9b4a63fe7bf281c4a9cbea27bea8635f, type: 2}
+  maxNumber: 1
+  currentStatus: 1

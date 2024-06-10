@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 09_StarlightShards
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 262978d01ec85b7468e9a8492ac601a9, type: 2}
+  maxNumber: 2
+  currentStatus: 1

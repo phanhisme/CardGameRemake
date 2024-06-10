@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 04_MoonCry
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: eb4b3390dee62204d84afbc5bff3c47d, type: 2}
+  maxNumber: 2
+  currentStatus: 1

@@ -86,31 +86,40 @@ public class EnemyBehaviour : MonoBehaviour
 
         if (!isSlept)
         {
-            //the enemy can hit the player for -- health or use special move
-            int rand = GetRandomAction();
-
-            switch (1)
+            switch (enemyObject.behaviourType)
             {
-                case 0:
-                    //Deal damage to player
-                    player.TakeDamage(enemyObject.damageDealt);
+                case EnemyScriptableObject.EnemyType.Mushroom:
+
+                    //the enemy can hit the player for -- health or use special move
+                    int rand = GetRandomAction();
+                    switch (rand)
+                    {
+                        case 0:
+                            //Deal damage to player
+                            player.TakeDamage(enemyObject.damageDealt);
+                            break;
+
+                        case 1:
+                            //Add defense
+                            block += 5;
+                            Debug.Log("new block = " + block);
+                            break;
+
+                        case 2:
+                            //Gain Strength
+                            break;
+
+                        case 3:
+                            //apply toxic debuff on the player
+                            break;
+
+                        default:
+                            Debug.Log(enemyName + "- failed to choose action");
+                            break;
+                    }
+
                     break;
 
-                case 1:
-                    //Add defense
-                    block += 5;
-                    Debug.Log("new block = " + block);
-                    break;
-
-                case 2:
-                    //Gain Strength
-                    break;
-
-                case 3:
-                //...
-                default:
-                    Debug.Log("enemy - failed to choose action");
-                    break;
             }
         }
         else

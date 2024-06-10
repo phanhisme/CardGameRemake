@@ -11,4 +11,12 @@ public class EnemyScriptableObject : ScriptableObject
     public int damageDealt;
 
     public int coinDrop;
+    public EnemyType behaviourType;
+
+    public enum EnemyType
+    {
+        Mushroom,
+        This,
+        That
+    }
 }

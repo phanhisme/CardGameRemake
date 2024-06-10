@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 12_Dreamweaver
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 11b63c5ee0c3b6741a09d7a65a1a41a5, type: 2}
+  maxNumber: 2
+  currentStatus: 1

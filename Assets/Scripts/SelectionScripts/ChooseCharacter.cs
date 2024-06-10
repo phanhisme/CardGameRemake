@@ -10,9 +10,16 @@ public class ChooseCharacter : ScriptableObject
     public Sprite splashArt;
     public string charName;
 
-    public int maxHealth; 
+    public int maxHealth;
 
     //number of max turn depends on the characters
     public int energy;
+    public int realmPower;
+    public Realm realm;
+
+    public enum Realm
+    {
+        DREAM, REALITY, NIGHTMARE
+    }
 }
 

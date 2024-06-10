@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 11_MoonlitNight
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 28aa461b52013bf4b82f83591586d73b, type: 2}
+  maxNumber: 1
+  currentStatus: 1

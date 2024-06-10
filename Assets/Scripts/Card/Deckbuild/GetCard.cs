@@ -1,18 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GetCard : MonoBehaviour
 {
     private Deckbuilding deck;
     private GameManager gm;
 
-    public GameObject indicator;
-    public GameObject r_indicator;
+    public List<GameObject> indCount = new List<GameObject>();
+    public GameObject indObject;
+    public GameObject lockPanel;
+    public Sprite indicator;
+    public Sprite e_indicator; //emptyIndicator
     public Transform _holder;
 
     public Card card;
     public int initialCardNumber;
+    public int cardNumber;
 
     private void Start()
     {
@@ -24,10 +29,18 @@ public class GetCard : MonoBehaviour
 
         initialCardNumber = card.maxNumber;
 
-        SetUpIndicator(initialCardNumber, CheckCardNumber());
+        SetUpIndicator(initialCardNumber);
+
+        cardNumber = CheckCardNumber();
+        ChangeSpriteIndicator();
+
+        if (card.currentStatus == Card.CardStatus.UNLOCKED)
+        {
+            lockPanel.SetActive(false);
+        }
     }
 
-    private int CheckCardNumber()
+    public int CheckCardNumber()
     {
         int cardUsed = 0;
 
@@ -41,25 +54,80 @@ public class GetCard : MonoBehaviour
         return cardUsed;
     }
 
-    private void SetUpIndicator(int maxInt, int usedInt)
+    private void SetUpIndicator(int maxInt)
     {
-        //instantiate the used item first them max int-used= item to spawn next
-        for (int i = 0; i < usedInt; i++)
+        if (indCount.Count == 0)
         {
-            GameObject r_ind = Instantiate(r_indicator, _holder);
+            //set up first
+            for (int i = 0; i < maxInt; i++)
+            {
+                GameObject e_ind = Instantiate(indObject, _holder);
+                indCount.Add(e_ind);
+            }
         }
+    }
 
-        for(int n = 0; n < (maxInt - usedInt); n++)
+    private void ChangeSpriteIndicator()
+    {
+        //int count = usedInt; //number of cards that have changed
+
+        if (indCount.Count > 0)
         {
-            GameObject ind = Instantiate(indicator, _holder);
+            int counter = 0; //stops the sprite change at the card number
+            int fixedNumber = initialCardNumber - CheckCardNumber(); //get the number of empty indicator
+
+            foreach (GameObject gameObject in indCount)
+            {
+                Image image = gameObject.GetComponent<Image>();
+
+                if (counter < cardNumber) //counter starts with 0, while cardNumber starts with 1
+                {
+                    image.sprite = indicator;
+                    counter++;
+                }
+
+                else if (fixedNumber >= counter)
+                {
+                    image.sprite = e_indicator; //change sprite to empty indicator
+                    fixedNumber--; //stops
+                }
+            }
         }
     }
 
     public void AddCard()
     {
-        deck.tempList.Add(card);
-        initialCardNumber--;
+        if (card.currentStatus == Card.CardStatus.UNLOCKED) //only when the cards are unlocked that can be added in the deck
+        {
+            //only add if the current number is < initial number
+            if (cardNumber < initialCardNumber)
+            {
+                deck.tempList.Add(card);
 
-        CheckCardNumber();
+                deck.TemporarySetUp();
+                deck.AddItem(card);
+
+                cardNumber += 1;
+                ChangeSpriteIndicator();
+            }
+        }
+    }
+
+    public void RemoveCard()
+    {
+        if (cardNumber > 0)
+        {
+            //deck.tempList.Remove(card);
+            deck.MinusItem(card);
+
+            cardNumber -= 1;
+            ChangeSpriteIndicator();
+        }
+    }
+
+    public void ClearCard()
+    {
+        cardNumber = CheckCardNumber();
+        ChangeSpriteIndicator();
     }
 }

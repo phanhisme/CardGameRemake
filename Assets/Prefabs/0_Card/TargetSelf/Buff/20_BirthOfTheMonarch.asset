@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 20_BirthOfTheMonarch
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 7f80270af0f4c8a4daba6c041b38aba5, type: 2}
+  maxNumber: 1
+  currentStatus: 1

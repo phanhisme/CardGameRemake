@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 10_Moonlight'sBlessing
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: f5df42032425aca4094145636c884931, type: 2}
+  maxNumber: 1
+  currentStatus: 1

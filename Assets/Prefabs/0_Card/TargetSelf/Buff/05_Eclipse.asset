@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 05_Eclipse
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: fb5b07c39c8d4f142b43365bda1b8d4b, type: 2}
+  maxNumber: 2
+  currentStatus: 1

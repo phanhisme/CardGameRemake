@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5c1d4a3e671d15f43b7bf4e486689fae, type: 3}
-  m_Name: 08_BloodMoon
+  m_Name: 16_LunarRadiance
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 98f32f07db807f1418bb3677b9f544e2, type: 2}
-  maxNumber: 2
+  data: {fileID: 11400000, guid: a56015cdc0a8bd64ca9da4b5eea76452, type: 2}
+  maxNumber: 1
   currentStatus: 1

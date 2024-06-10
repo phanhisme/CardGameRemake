@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 18_Comet'sBlessing
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: b78545321a930a647b2721ce4857a9b9, type: 2}
+  maxNumber: 2
+  currentStatus: 1

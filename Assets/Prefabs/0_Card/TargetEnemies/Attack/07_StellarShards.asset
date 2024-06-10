@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: 07_StellarShards
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 877d435d462e54940bc93d705986c675, type: 2}
+  maxNumber: 2
+  currentStatus: 1

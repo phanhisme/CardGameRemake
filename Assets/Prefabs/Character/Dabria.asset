@@ -17,3 +17,5 @@ MonoBehaviour:
   charName: Dabria
   maxHealth: 100
   energy: 4
+  realmPower: 4
+  realm: 0

@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public Turn turn;
 
     public int energy; //number of max turn depends on the character
+    public int realmPower; //power to use realm skills
     public TextMeshProUGUI energyText;
 
     //card
@@ -28,26 +29,35 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> enemyList = new List<GameObject>();
     public List<GameObject> enemyInStage = new List<GameObject>();
-
-    void Start()
-    {
-        Deckbuilding deck = FindObjectOfType<Deckbuilding>();
-        foreach (Card card in deck.tempList)
-        {
-            starterDeck.Add(card);
-        }
-
-        deck.tempList.Clear();
-    }
+    public Transform enemyHolder;
 
     void Update()
     {
-        energyText.text = "" + energy.ToString();
+        energyText.text = energy.ToString();
     }
 
     public void SpawnEnemies()
     {
-        //choose to spawn which and how many enemies in stage (can this be random?)
+        //chance to spawn double
+        float spawnChance = Random.value;
+        if (spawnChance < 0.3)
+        {
+            //spawn 2
+            for (int i = 0; i < 2; i++)
+            {
+                int randValue = Random.Range(0, enemyList.Count);
+
+                GameObject enemyToSpawn = Instantiate(enemyList[randValue], enemyHolder);
+                enemyInStage.Add(enemyToSpawn);
+            }
+        }
+        else
+        {
+            int randValue = Random.Range(0, enemyList.Count);
+
+            GameObject enemyToSpawn = Instantiate(enemyList[randValue], enemyHolder);
+            enemyInStage.Add(enemyToSpawn);
+        }
     }
 
     public void PlayerTurn()
@@ -91,6 +101,15 @@ public class GameManager : MonoBehaviour
             onDeck.FindCard(card);
 
             playerDeck.Add(card);
+            starterDeck.Remove(card);
+        }
+    }
+
+    public void CheckCardOnHand()
+    {
+        if (playerDeck.Count > 7)
+        {
+            //DISCARD
         }
     }
 
@@ -107,8 +126,6 @@ public class GameManager : MonoBehaviour
                 //effect after fight, not turn
                 //relic.DabRelicEffect();
             }
-
-            //MoveCard();
 
             //if keep the block for next turn
             CheckBlockStatus();
@@ -190,5 +207,16 @@ public class GameManager : MonoBehaviour
         }
         else
             Debug.Log("Do not remove block");
+    }
+
+    public void ResetDeck(Deckbuilding deck)
+    {
+        foreach (Card card in deck.tempList)
+        {
+            starterDeck.Add(card);
+        }
+
+        deck.tempList.Clear();
+        deck.removed.Clear();
     }
 }
