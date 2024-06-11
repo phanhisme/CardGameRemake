@@ -25,7 +25,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         Card card = thisCard.card;
 
         //Debug.Log("OnDrop");
-        if (eventData.pointerDrag != null && gameManager.energy >= data.stamCost)
+        if (eventData.pointerDrag != null && playerScript.energy >= data.stamCost)
         {
             //the card does not need to be in the perfect middle of the enemy, just hit the enemy will trigger the effect of the card upon dropping.
             //if the card is of attack type and is hitting the enmy
@@ -74,7 +74,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             if (enlessDream)
                             {
                                 enemyScript.TakeDamage(data.effectAmount * 2);
-                                gameManager.energy += 1;
+                                playerScript.energy += 1;
                             }
                             else
                                 enemyScript.TakeDamage(data.effectAmount);
@@ -268,6 +268,11 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 }
             }
 
+            if (data.cardType == CardData.CardType.Attack)
+            {
+                playerScript.RealmPower();
+            }
+
             //if the effect carry out -> turn decrease
             gameManager.selectedCard = null;
 
@@ -290,18 +295,16 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             }
 
             //minus energy based on the stam cost
-            gameManager.energy -= data.stamCost;
+            playerScript.energy -= data.stamCost;
         }
 
-        else if (gameManager.energy != 0 && gameManager.energy < data.stamCost)
+        else if (playerScript.energy != 0 && playerScript.energy < data.stamCost)
         {
             Debug.Log("You do not have enough energy to use this card");
         }
-        else if (gameManager.energy == 0)
+        else if (playerScript.energy == 0)
         {
             Debug.Log("You ran out of energy, cannot place more cards");
         }
     }
-
-    
 }

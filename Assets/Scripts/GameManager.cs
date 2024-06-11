@@ -7,23 +7,24 @@ public class GameManager : MonoBehaviour
 {
     //script reference
     public OnDeckBehaviour selectedCard;
-
     public ChooseCharacter selectedChar;
     private CharacterSelection.Character character;
 
+    //floorManager
+    public TextMeshProUGUI floorText;
+    [SerializeField] private int currentFloor;
+
+    //card
     public Transform playerHand;
     public GameObject cardSlot;
 
     //player and turn
     [SerializeField] private GameObject player;
     [SerializeField] private EffectDuration effectDuration;
+    [SerializeField] private BasePlayer basePlayer;
 
     public enum Turn { Player,Enemy};
-    public Turn turn;
-
-    public int energy; //number of max turn depends on the character
-    public int realmPower; //power to use realm skills
-    public TextMeshProUGUI energyText;
+    public Turn turn; 
 
     //card
     public List<Card> starterDeck = new List<Card>();
@@ -40,37 +41,55 @@ public class GameManager : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         effectDuration = player.GetComponent<EffectDuration>();
+        basePlayer = player.GetComponent<BasePlayer>();
+
+        currentFloor = 1;
+        floorText.text = "Floor " + currentFloor;
 
         SpawnEnemies();
-    }
-    void Update()
-    {
-        energyText.text = energy.ToString();
     }
 
     public void SpawnEnemies()
     {
-        //chance to spawn double
-        float spawnChance = Random.value;
-        if (spawnChance < 0.3)
+        if (currentFloor < 3)
         {
-            //spawn 2
-            for (int i = 0; i < 2; i++)
-            {
-                //spawn object
-                GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
-                EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
-
-                enemyInStage.Add(eBehaviour.enemyObject);
-            }
+            //guarantee to spawn 1 enemy
+            AddEnemies();
+        }
+        else if (currentFloor == 6 || currentFloor == 12)
+        {
+            //meet shop
+        }
+        else if (currentFloor == 15)
+        {
+            //meet restRoom
         }
         else
         {
-            GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
-            EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
-
-            enemyInStage.Add(eBehaviour.enemyObject);
+            //chance to spawn double
+            float spawnChance = Random.value;
+            if (spawnChance < 0.3)
+            {
+                //spawn 2
+                for (int i = 0; i < 2; i++)
+                {
+                    //spawn object
+                    AddEnemies();
+                }
+            }
+            else
+            {
+                //guarantee to spawn 1 enemy
+                AddEnemies();
+            }
         }
+    }
+
+    public void AddEnemies()
+    {
+        GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
+        EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
+        enemyInStage.Add(eBehaviour.enemyObject);
     }
 
     public void PlayerTurn()
@@ -79,8 +98,7 @@ public class GameManager : MonoBehaviour
         {
             //player turn starts here
             turn = Turn.Player;
-            energy = selectedChar.energy;
-
+            basePlayer.ResetEnergy();
 
             //shuffle deck and give out 5 starter card
             ShuffleDeck(5);
@@ -123,6 +141,7 @@ public class GameManager : MonoBehaviour
         if (playerDeck.Count > 7)
         {
             //DISCARD
+            //Open new panel
         }
     }
 
@@ -167,12 +186,18 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(WaitForSeconds(0.5f));
             }
 
+            StartCoroutine(WaitForSeconds(0.5f));
+
             //run player's turn baner
             turn = Turn.Player;
-            energy = selectedChar.energy;
+
+            //the scripts are null?
+            basePlayer = FindObjectOfType<BasePlayer>();
+            effectDuration = FindObjectOfType<EffectDuration>();
+
+            basePlayer.ResetEnergy();
 
             //check buffs & debuffs
-            Debug.Log(effectDuration);
             effectDuration.CheckLullaby();
             effectDuration.CheckToxic();
         }
@@ -185,12 +210,15 @@ public class GameManager : MonoBehaviour
             //all enemies are dead
             //Banner fight end
         }
-        //else if (player){
     }
 
     IEnumerator WaitForSeconds(float waitTime)
     {
-        yield return new WaitForSeconds(waitTime);
+        Debug.Log("Paused");
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(waitTime);
+        Time.timeScale = 1;
+        Debug.Log("Done Pause");
     }
 
     public int GetDefenseCard()

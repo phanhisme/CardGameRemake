@@ -20,6 +20,7 @@ public class CardData : ScriptableObject
     public string cardDes;
     public CardType cardType;
     public CardTarget cardTarget;
+    public DamageType damageType;
 
     public enum CardType
     {
@@ -29,5 +30,10 @@ public class CardData : ScriptableObject
     public enum CardTarget
     {
         Player, Enemy
+    }
+
+    public enum DamageType
+    {
+        Physical, Elememtal
     }
 }

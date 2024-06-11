@@ -41,6 +41,8 @@ public class EnemyBehaviour : MonoBehaviour
         health = enemyObject.maxHealth;
         enemyName.text = enemyObject.enemyName;
         enemyImage.sprite = enemyObject.enemyImage;
+
+        ChooseNextAction();
     }
 
     void Update()
@@ -109,34 +111,32 @@ public class EnemyBehaviour : MonoBehaviour
                     {
                         nextActionValue = GetRandomAction();
                     }
-                    else
+
+                    switch (nextActionValue)
                     {
-                        switch (nextActionValue)
-                        {
-                            case 0:
-                                //Deal damage to player
-                                player.TakeDamage(enemyObject.damageDealt);
-                                break;
+                        case 0:
+                            //Deal damage to player
+                            player.TakeDamage(enemyObject.damageDealt);
+                            break;
 
-                            case 1:
-                                //Add defense
-                                block += 5;
-                                break;
+                        case 1:
+                            //Add defense
+                            block += 5;
+                            break;
 
-                            case 2:
-                                //Gain Strength
-                                appliedStatus.Add(checkEffect("S02"));
-                                break;
+                        case 2:
+                            //Gain Strength
+                            appliedStatus.Add(checkEffect("S02"));
+                            break;
 
-                            case 3:
-                                //apply toxic debuff on the player
-                                playerEff.appliedStatus.Add(checkEffect("S11"));
-                                break;
+                        case 3:
+                            //apply toxic debuff on the player
+                            playerEff.appliedStatus.Add(checkEffect("S11"));
+                            break;
 
-                            default:
-                                Debug.Log(enemyName + "- failed to choose action");
-                                break;
-                        }
+                        default:
+                            Debug.Log(enemyName + "- failed to choose action");
+                            break;
                     }
 
                     //choose next action value:

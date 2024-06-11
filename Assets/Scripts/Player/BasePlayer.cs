@@ -5,25 +5,37 @@ using TMPro;
 
 public class BasePlayer : MonoBehaviour
 {
+    public List<GameObject> realmOrb = new List<GameObject>();
+    public GameObject orbs;
+    public Transform _orbHolder;
+
     public ChooseCharacter character;
     [SerializeField]private EffectDuration effectScript;
 
     [SerializeField] private int playerHealth;
     [SerializeField] private int blockAmount = 0;
 
-    public TextMeshProUGUI text;
-    public TextMeshProUGUI text2;
+    public TextMeshProUGUI healthDisplay;
+    public TextMeshProUGUI blockDisplay;
+    public TextMeshProUGUI energyText;
+
+    public int energy; //number of max turn depends on the character
+    public int realmPower; //power to use realm skills
+    private int maxRealmPower;
+    public int counter;
 
     void Start()
     {
         effectScript = GetComponent<EffectDuration>();
         playerHealth = character.maxHealth;
+        maxRealmPower = character.realmPower;
     }
 
     void Update()
     {
-        text.text = playerHealth.ToString();
-        text2.text = blockAmount.ToString();
+        healthDisplay.text = playerHealth.ToString();
+        blockDisplay.text = blockAmount.ToString();
+        energyText.text = energy.ToString();
     }
 
     public void TakeDamage(int damage)
@@ -96,5 +108,30 @@ public class BasePlayer : MonoBehaviour
         }
         else
             return;
+    }
+
+    public void RealmPower()
+    {
+        if (counter < 1)
+        {
+            realmPower++;
+            counter++;
+        }
+        else if (counter == 1)
+        {
+            counter = 0;
+            if (realmPower <= maxRealmPower)
+            {
+                realmPower++;
+
+                GameObject orb = Instantiate(orbs, _orbHolder);
+                realmOrb.Add(orb);
+            }
+        }
+    }
+
+    public void ResetEnergy()
+    {
+        energy = character.energy;
     }
 }
