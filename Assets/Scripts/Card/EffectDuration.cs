@@ -86,6 +86,14 @@ public class EffectDuration : MonoBehaviour
         }
     }
 
+    public void CheckToxic()
+    {
+        if (appliedStatus.Contains(checkEffect("S11")))
+        {
+            playerScript.TakeDamage(2);
+        }
+    }
+
     public bool ReBirth()
     {
         if (appliedStatus.Contains(allStatus[6]))
@@ -94,6 +102,19 @@ public class EffectDuration : MonoBehaviour
         }
         else
             return false;
+    }
+
+    public Status checkEffect(string ID)
+    {
+        foreach (Status status in allStatus)
+        {
+            if (status.statusID == ID)
+            {
+                return status;
+            }
+        }
+
+        return null;
     }
 
     public bool ReturnCard(Status status)

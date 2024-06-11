@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: a5d6451283fa87446b5ebfe563bdfa0a, type: 2}
   maxNumber: 2
-  currentStatus: 1
+  currentStatus: 0

@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour
     public GameObject cardSlot;
 
     //player and turn
+    [SerializeField] private GameObject player;
+    [SerializeField] private EffectDuration effectDuration;
+
     public enum Turn { Player,Enemy};
     public Turn turn;
 
@@ -27,6 +30,7 @@ public class GameManager : MonoBehaviour
     public List<Card> playerDeck = new List<Card>();
     public List<Card> discardedDeck = new List<Card>();
 
+    //enemy
     public List<EnemyScriptableObject> enemyList = new List<EnemyScriptableObject>();
     public List<EnemyScriptableObject> enemyInStage = new List<EnemyScriptableObject>();
     public GameObject enemyObject;
@@ -34,6 +38,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+        effectDuration = player.GetComponent<EffectDuration>();
+
         SpawnEnemies();
     }
     void Update()
@@ -164,9 +171,10 @@ public class GameManager : MonoBehaviour
             turn = Turn.Player;
             energy = selectedChar.energy;
 
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            EffectDuration effectScript = player.GetComponent<EffectDuration>();
-            effectScript.CheckLullaby();
+            //check buffs & debuffs
+            Debug.Log(effectDuration);
+            effectDuration.CheckLullaby();
+            effectDuration.CheckToxic();
         }
     }
 

@@ -115,7 +115,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             break;
 
                         case 19: //Sleep a single enemy for 2 turn. Only wake up if attacked by the player or end of Sleep
-                            enemyScript.appliedStatus.Add(enemyScript.allStatus[2]);
+                            enemyScript.appliedStatus.Add(effectScript.checkEffect("S06"));
                             break;
 
                         default:
@@ -134,11 +134,11 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 if(data.cardTarget == CardData.CardTarget.Player)
                 {
                     //set status
-                    Status strength = effectScript.allStatus[0];
-                    Status moonlight = effectScript.allStatus[2];
-                    Status lullaby = effectScript.allStatus[3];
-                    Status eclipse = effectScript.allStatus[6];
-                    Status remainBlock = effectScript.allStatus[7];
+                    Status strength = effectScript.checkEffect("S02");
+                    Status moonlight = effectScript.checkEffect("S04");
+                    Status lullaby = effectScript.checkEffect("S05");
+                    Status eclipse = effectScript.checkEffect("S09");
+                    Status remainBlock = effectScript.checkEffect("S10");
 
                     bool eclipseActive = effectScript.appliedStatus.Contains(eclipse);
                     if (eclipseActive)
@@ -302,4 +302,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             Debug.Log("You ran out of energy, cannot place more cards");
         }
     }
+
+    
 }

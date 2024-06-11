@@ -16,10 +16,16 @@ public class ChooseCharacter : ScriptableObject
     public int energy;
     public int realmPower;
     public Realm realm;
+    public Status status;
 
     public enum Realm
     {
         DREAM, REALITY, NIGHTMARE
+    }
+
+    public enum Status
+    {
+        LOCKED, UNLOCKED
     }
 }
 

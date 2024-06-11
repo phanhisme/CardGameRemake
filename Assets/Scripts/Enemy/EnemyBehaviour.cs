@@ -8,7 +8,9 @@ public class EnemyBehaviour : MonoBehaviour
 {
     public EnemyScriptableObject enemyObject;
     private InGameCurrency currencyScript;
-    public BasePlayer player;
+
+    private BasePlayer player;
+    private EffectDuration playerEff;
 
     public Image enemyImage;
     public TextMeshProUGUI enemyName;
@@ -21,7 +23,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public List<Sprite> intention = new List<Sprite>();
     public GameObject intentionObject;
-    public int nextActionValue;
+    public int nextActionValue = -1;
 
     private Animator anim;
 
@@ -94,7 +96,7 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void ChooseNextAction()
     {
-        bool isSlept = appliedStatus.Contains(allStatus[2]);
+        bool isSlept = appliedStatus.Contains(checkEffect("S06"));
 
         if (!isSlept)
         {
@@ -103,7 +105,7 @@ public class EnemyBehaviour : MonoBehaviour
                 case EnemyScriptableObject.EnemyType.Mushroom:
 
                     //the enemy can hit the player for -- health or use special move
-                    if (nextActionValue == 0)
+                    if (nextActionValue == -1)
                     {
                         nextActionValue = GetRandomAction();
                     }
@@ -119,28 +121,28 @@ public class EnemyBehaviour : MonoBehaviour
                             case 1:
                                 //Add defense
                                 block += 5;
-                                Debug.Log("new block = " + block);
                                 break;
 
                             case 2:
                                 //Gain Strength
+                                appliedStatus.Add(checkEffect("S02"));
                                 break;
 
                             case 3:
                                 //apply toxic debuff on the player
+                                playerEff.appliedStatus.Add(checkEffect("S11"));
                                 break;
 
                             default:
                                 Debug.Log(enemyName + "- failed to choose action");
                                 break;
                         }
-
-                        //choose next action value:
-                        nextActionValue = GetRandomAction();
-                        Image thisImage = intentionObject.GetComponent<Image>();
-                        thisImage.sprite = intention[nextActionValue];
                     }
 
+                    //choose next action value:
+                    nextActionValue = GetRandomAction();
+                    Image thisImage = intentionObject.GetComponent<Image>();
+                    thisImage.sprite = intention[nextActionValue];
                     break;
             }
         }
@@ -160,5 +162,18 @@ public class EnemyBehaviour : MonoBehaviour
     public int GetRandomAction()
     {
         return Random.Range(0, 1);
+    }
+
+    public Status checkEffect(string ID)
+    {
+        foreach(Status status in allStatus)
+        {
+            if (status.statusID == ID)
+            {
+                return status;
+            }
+        }
+
+        return null;
     }
 }

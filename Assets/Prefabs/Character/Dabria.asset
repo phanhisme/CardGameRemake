@@ -19,3 +19,4 @@ MonoBehaviour:
   energy: 4
   realmPower: 4
   realm: 0
+  status: 1
