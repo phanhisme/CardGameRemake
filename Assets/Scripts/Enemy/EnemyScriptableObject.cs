@@ -18,7 +18,7 @@ public class EnemyScriptableObject : ScriptableObject
     public enum EnemyType
     {
         Mushroom,
-        This,
-        That
+        Goblin,
+        Eye
     }
 }

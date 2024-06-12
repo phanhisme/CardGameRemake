@@ -38,6 +38,14 @@ public class BasePlayer : MonoBehaviour
         energyText.text = energy.ToString();
     }
 
+    public void ResetToStart()
+    {
+        RemoveBlock();
+        energy = character.energy;
+        realmPower = 0;
+        counter = 0;
+    }
+
     public void TakeDamage(int damage)
     {
         playerHealth -= damage;

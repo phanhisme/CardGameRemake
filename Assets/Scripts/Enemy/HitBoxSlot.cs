@@ -31,6 +31,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //if the card is of attack type and is hitting the enmy
             if (gameObject.tag == "Enemy")
             {
+                Debug.Log("touch");
                 //find enemy behaviour within the dropped target
                 EnemyBehaviour enemyScript = GetComponent<EnemyBehaviour>();
 

@@ -3109,9 +3109,12 @@ MonoBehaviour:
   discardedDeck: []
   enemyList:
   - {fileID: 11400000, guid: f04662513cdfe3c4f81046b5655b0175, type: 2}
+  - {fileID: 11400000, guid: c96acb51603ed014695aec6f0069d9b4, type: 2}
+  - {fileID: 11400000, guid: c8ac1430fdccda84998eabb417ac5c54, type: 2}
   enemyInStage: []
   enemyObject: {fileID: 220549455499622232, guid: 8dd449ea619052740a7245ebd01ee691, type: 3}
   enemyHolder: {fileID: 297090631}
+  anim: {fileID: 0}
 --- !u!114 &533502995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10882,6 +10885,7 @@ MonoBehaviour:
   enemyInStage: []
   enemyObject: {fileID: 0}
   enemyHolder: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!1 &1949231594
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f38a69ae71cae2a488e1e6a472a0cdc1, type: 3}
+  m_Name: Flying Eye
+  m_EditorClassIdentifier: 
+  enemyName: Flying Eye
+  enemyImage: {fileID: -2053427763, guid: f6a3c0a53e1c22e458858172b07d153e, type: 3}
+  maxHealth: 15
+  damageDealt: 10
+  coinDrop: 10
+  behaviourType: 2

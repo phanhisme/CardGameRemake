@@ -25,7 +25,9 @@ public class EnemyBehaviour : MonoBehaviour
     public GameObject intentionObject;
     public int nextActionValue = -1;
 
-    private Animator anim;
+    [SerializeField]private Animator anim;
+    public GameObject slashObject;
+    public Animator slashAnim;
 
     //keep track of the the buff/debuff
     public List<Status> allStatus = new List<Status>();
@@ -38,6 +40,22 @@ public class EnemyBehaviour : MonoBehaviour
         player = FindObjectOfType<BasePlayer>();
 
         enemyObject = ChooseEnemies();
+
+        switch (enemyObject.behaviourType)
+        {
+            case EnemyScriptableObject.EnemyType.Mushroom:
+                anim.SetTrigger("M_Idle");
+                break;
+
+            case EnemyScriptableObject.EnemyType.Eye:
+                anim.SetTrigger("E_Idle");
+                break;
+
+            case EnemyScriptableObject.EnemyType.Goblin:
+                anim.SetTrigger("G_Idle");
+                break;
+        }
+
         health = enemyObject.maxHealth;
         enemyName.text = enemyObject.enemyName;
         enemyImage.sprite = enemyObject.enemyImage;
@@ -63,6 +81,27 @@ public class EnemyBehaviour : MonoBehaviour
 
     public void TakeDamage(int damageAmount)
     {
+        slashObject.SetActive(true);
+        slashAnim.SetTrigger("Slash");
+
+        switch (enemyObject.behaviourType)
+        {
+            case EnemyScriptableObject.EnemyType.Mushroom:
+                anim.SetTrigger("M_TakingDamage");
+                anim.SetTrigger("M_Idle");
+                break;
+
+            case EnemyScriptableObject.EnemyType.Eye:
+                anim.SetTrigger("E_TakingDamage");
+                anim.SetTrigger("E_Idle");
+                break;
+
+            case EnemyScriptableObject.EnemyType.Goblin:
+                anim.SetTrigger("G_TakingDamage");
+                anim.SetTrigger("G_Idle");
+                break;
+        }
+
         //if block available
         if (block >= 0)
         {
@@ -84,16 +123,39 @@ public class EnemyBehaviour : MonoBehaviour
 
         if(health <= 0)
         {
+            StartCoroutine(WaitForSeconds(0.1f));
+            switch (enemyObject.behaviourType)
+            {
+                case EnemyScriptableObject.EnemyType.Mushroom:
+                    anim.SetTrigger("M_Death");
+                    break;
+
+                case EnemyScriptableObject.EnemyType.Eye:
+                    anim.SetTrigger("E_Death");
+                    break;
+
+                case EnemyScriptableObject.EnemyType.Goblin:
+                    anim.SetTrigger("G_Death");
+                    break;
+            }
+            StartCoroutine(WaitForSeconds(0.5f));
+            
+
             //die and drop coin
             currencyScript.inGameCurrency += enemyObject.coinDrop;
 
-            Debug.Log("is dead");
-            //anim.SetTrigger("isDead");
-
-            //Destroy(this.gameObject);
-
-            //move to next stage (choose the new path through story?)
+            GameManager gm = FindObjectOfType<GameManager>();
+            gm.enemyInStage.Remove(enemyObject);
+            gm.CheckEnemies();
+            Destroy(this.gameObject);
         }
+    }
+
+    public void DisableSlash()
+    {
+        Debug.Log("disable");
+        slashAnim.SetTrigger("Empty");
+        slashObject.SetActive(false);
     }
 
     public void ChooseNextAction()
@@ -175,5 +237,12 @@ public class EnemyBehaviour : MonoBehaviour
         }
 
         return null;
+    }
+
+    IEnumerator WaitForSeconds(float waitTime)
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(waitTime);
+        Time.timeScale = 1;
     }
 }

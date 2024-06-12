@@ -37,6 +37,9 @@ public class GameManager : MonoBehaviour
     public GameObject enemyObject;
     public Transform enemyHolder;
 
+    //animation
+    public Animator anim;
+
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -90,6 +93,40 @@ public class GameManager : MonoBehaviour
         GameObject enemyToSpawn = Instantiate(enemyObject, enemyHolder);
         EnemyBehaviour eBehaviour = enemyToSpawn.GetComponentInChildren<EnemyBehaviour>();
         enemyInStage.Add(eBehaviour.enemyObject);
+    }
+
+    public void CheckEnemies()
+    {
+        if (enemyInStage.Count == 0)
+        {
+            Debug.Log("All enemies are defeated, reset to new floor");
+            currentFloor++;
+
+            //reset deck
+            if (playerDeck.Count != 0)
+            {
+                foreach(Card card in playerDeck)
+                {
+                    starterDeck.Add(card);
+                    playerDeck.Remove(card);
+                }
+            }
+
+            if (discardedDeck.Count != 0)
+            {
+                foreach (Card card in discardedDeck)
+                {
+                    starterDeck.Add(card);
+                    discardedDeck.Remove(card);
+                }
+            }
+
+            //reset player
+            basePlayer.ResetToStart();
+
+            anim.SetTrigger("NewRound");
+            StartCoroutine(WaitForSeconds(1f));
+        }
     }
 
     public void PlayerTurn()
