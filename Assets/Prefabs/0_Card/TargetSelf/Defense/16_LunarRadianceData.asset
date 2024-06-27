@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 16_LunarRadianceData
   m_EditorClassIdentifier: 
   ID: 16
-  icon: {fileID: 21300000, guid: d4b0d886bde602f4d87cc810e578e2c7, type: 3}
+  icon: {fileID: 76507576, guid: 54a633559eb6fa14aa1455ce13f1ca78, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
   cardName: Lunar Radiance
   stamCost: 2
@@ -22,3 +22,4 @@ MonoBehaviour:
   cardDes: Remove all debuffs, gain 10 blocks.
   cardType: 1
   cardTarget: 0
+  damageType: 0

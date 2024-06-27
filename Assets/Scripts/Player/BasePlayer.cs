@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class BasePlayer : MonoBehaviour
@@ -16,26 +17,50 @@ public class BasePlayer : MonoBehaviour
     [SerializeField] private int blockAmount = 0;
 
     public TextMeshProUGUI healthDisplay;
+    public TextMeshProUGUI overHealthDisplay;
     public TextMeshProUGUI blockDisplay;
     public TextMeshProUGUI energyText;
 
+    public Slider healthSlider;
+
     public int energy; //number of max turn depends on the character
-    public int realmPower; //power to use realm skills
+    public int realmPower = 0; //power to use realm skills
     private int maxRealmPower;
     public int counter;
+
+    public Animator anim;
+    public GameObject losePanel;
 
     void Start()
     {
         effectScript = GetComponent<EffectDuration>();
         playerHealth = character.maxHealth;
         maxRealmPower = character.realmPower;
+
+        healthSlider.maxValue = character.maxHealth;
+        healthSlider.minValue = 0;
+
+        losePanel.SetActive(false);
     }
 
     void Update()
     {
         healthDisplay.text = playerHealth.ToString();
+        overHealthDisplay.text = playerHealth + "/" + character.maxHealth.ToString();
+        healthSlider.value = playerHealth;
+
         blockDisplay.text = blockAmount.ToString();
         energyText.text = energy.ToString();
+
+        GameManager gm = FindObjectOfType<GameManager>();
+        if (gm.turn == GameManager.Turn.Player)
+        {
+            anim.SetTrigger("isPlayerTurn");
+        }
+        else if (gm.turn == GameManager.Turn.Enemy)
+        {
+            anim.SetTrigger("isNotPlayerTurn");
+        }
     }
 
     public void ResetToStart()
@@ -48,13 +73,18 @@ public class BasePlayer : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        anim.SetTrigger("isAttacked");
+
         playerHealth -= damage;
 
         if (playerHealth <= 0)
         {
+            playerHealth = 0;
             if (!effectScript.ReBirth())
             {
-                Debug.Log("You lose...");
+                losePanel.SetActive(true);
+
+                //Debug.Log("You lose...");
 
                 //anim.SetTrigger("isDead");
                 //Destroy(this.gameObject);
@@ -65,9 +95,12 @@ public class BasePlayer : MonoBehaviour
             {
                 playerHealth += 10;
                 Debug.Log("You continue your journey... Mark of Rebirth is removed from your inventory");
-                //effectScript.appliedStatus.Remove(effectScript.allStatus[]);
-            }
+                
+                GameManager gm = FindObjectOfType<GameManager>();
+                gm.markOfRebirth.SetActive(false);
 
+                effectScript.appliedStatus.Remove(effectScript.checkEffect("S08"));
+            }
         }
     }
 

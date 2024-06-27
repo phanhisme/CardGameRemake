@@ -22,8 +22,6 @@ public class Deckbuilding : MonoBehaviour
     private void Start()
     {
         gm = FindObjectOfType<GameManager>();
-
-        SetUpItem();
     }
 
     public void SetUpItem()
@@ -131,7 +129,7 @@ public class Deckbuilding : MonoBehaviour
         return null;
     }
 
-    private int GetInitialNumber(Card thisCard)
+    private int GetInitialNumber(Card thisCard) //number of card at the start (after interacting with the ui
     {
         int cardNumber = 0;
         gm = FindObjectOfType<GameManager>();

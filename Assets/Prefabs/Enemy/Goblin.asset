@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Goblin
   enemyImage: {fileID: -2046251854, guid: 1d9ddd329ad8113498a974be67d326b0, type: 3}
-  maxHealth: 100
+  maxHealth: 20
   damageDealt: 10
   coinDrop: 15
   behaviourType: 1

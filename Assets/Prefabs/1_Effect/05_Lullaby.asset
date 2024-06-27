@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S05
   effectName: Lullaby
-  effectIcon: {fileID: 21300000, guid: 10bad90e9587670429e4ae74bdb86a64, type: 3}
+  effectIcon: {fileID: -2104962351, guid: cfa9e7ca988cb3d439751ebc172a0924, type: 3}
   effectDescription: The amount of Lullaby will turn into Blocks if there is a Defensive
     Card being played. Else, grant Health to the player after the end of 3 turns
   effectDuration: 3

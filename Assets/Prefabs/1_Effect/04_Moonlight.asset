@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S04
   effectName: Moonlight
-  effectIcon: {fileID: 21300000, guid: 10bad90e9587670429e4ae74bdb86a64, type: 3}
+  effectIcon: {fileID: -628283674, guid: 638c4b71f58a393498aef0ab43a2b6bf, type: 3}
   effectDescription: Recieve 3 <color=blue>Blocks</color> for each Attack card used
   effectDuration: 2
   effectType: 0

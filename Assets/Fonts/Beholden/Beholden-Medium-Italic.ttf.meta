@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 354c30eed0583e745a4d2a557ae3d556
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Beholden
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 158b9980c30d4d64a92852a7ee17783c, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

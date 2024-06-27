@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S09
   effectName: Eclipse
-  effectIcon: {fileID: 21300000, guid: 74054e9276182c643806481a3f5f269c, type: 3}
+  effectIcon: {fileID: -484431519, guid: 638c4b71f58a393498aef0ab43a2b6bf, type: 3}
   effectDescription: Gain half of the <color=blue>Blocks</color> but double the <color=red>Attack</color>
   effectDuration: 1
   effectType: 0

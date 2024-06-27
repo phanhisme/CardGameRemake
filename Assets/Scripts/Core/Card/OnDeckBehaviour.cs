@@ -36,14 +36,14 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void OnPointerDown(PointerEventData eventData)
     {
         //On mouse down
-        Debug.Log("OnPointerDown");
+        //Debug.Log("OnPointerDown");
         gameManager.selectedCard = this;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
         //When the player start dragging the card
-        Debug.Log("OnBeginDrag");
+        //Debug.Log("OnBeginDrag");
 
         //Transparent effect
         canvasGroup.alpha = .6f;
@@ -56,7 +56,7 @@ public class OnDeckBehaviour : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public void OnEndDrag(PointerEventData eventData)
     {
         //When the player let go of the card
-        Debug.Log("OnEndDrag");
+        //Debug.Log("OnEndDrag");
 
         // return to the original transform
         canvasGroup.alpha = 1f;

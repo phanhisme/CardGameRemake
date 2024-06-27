@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S08
   effectName: Mark of Rebirth
-  effectIcon: {fileID: 0}
+  effectIcon: {fileID: -104882834, guid: cfa9e7ca988cb3d439751ebc172a0924, type: 3}
   effectDescription: Revive the player with 10 Health upon first lethal damage.
   effectDuration: 999
   effectType: 0

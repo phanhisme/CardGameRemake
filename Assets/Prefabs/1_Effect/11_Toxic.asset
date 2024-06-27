@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S11
   effectName: Toxic
-  effectIcon: {fileID: 21300000, guid: bf682d3d86c3b994cb4df96033281d3a, type: 3}
-  effectDescription: Deal 2 damage to the player at start of turn for 2 turns.
+  effectIcon: {fileID: 1672105316, guid: 54a633559eb6fa14aa1455ce13f1ca78, type: 3}
+  effectDescription: Deal <color=green>2 damage</color> to the player at start of
+    turn for 2 turns.
   effectDuration: 2
   effectType: 1

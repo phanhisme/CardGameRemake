@@ -11,7 +11,7 @@ public class MenuButtons : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene("SelectionScene");
+        SceneManager.LoadScene("01_Gameplay");
     }
 
     public void QuitGame()

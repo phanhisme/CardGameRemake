@@ -9,7 +9,7 @@ public class DabriaStarterRelic : MonoBehaviour
     //this is Dabria's specialty starter relic - tiny hope
     //this script is disabled by default and will only be acessible if the player choose the character "Dabria"
 
-    //at the start of turn, Dabria will heal 2HP. After 4 rounds and above 50HP, Dabria will receive a "blessing"
+    //at the start of a new round, Dabria will heal 2HP. After 4 rounds and above 50HP, Dabria will receive a "blessing"
     //types of blessings: coin (ig currency), HP, extra card to deck, extra card to deck on hand, turn, random relic...
 
     public int blessingCount = 0;
@@ -33,21 +33,19 @@ public class DabriaStarterRelic : MonoBehaviour
         player = FindObjectOfType<BasePlayer>();
         if (player != null)
         {
-            player.HealUp(2);
-
             if (blessingCount == 4)
             {
                 if (player.HealthCheck())
                 {
                     Debug.Log("You received Blessings from the Moon");
 
-                    int randBlessing = Random.Range(0, 2); //I CANT USE BLESSING.LENGHT, WHY?
+                    int randBlessing = Random.Range(0, 3); //I CANT USE BLESSING.LENGHT, WHY?
                     switch (randBlessing)
                     {
                         case 0:
                             randomBlessing = Blessings.Health;
-                            Debug.Log("You receive 5 health");
-                            player.HealUp(5);
+                            Debug.Log("You receive 1 health");
+                            player.HealUp(1);
 
                             break;
 
@@ -66,9 +64,12 @@ public class DabriaStarterRelic : MonoBehaviour
 
                             GameManager gm = FindObjectOfType<GameManager>();
                             gm.ShuffleDeck(1);
-
                             break;
 
+                        case 3:
+                            player.energy += 1;
+                            Debug.Log("You receive 1 Energy");
+                            break;
                     }
                 }
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statusID: S02
   effectName: Stregth
-  effectIcon: {fileID: 21300000, guid: 73ed977e91ecd0e44ab8f14dc6559c13, type: 3}
+  effectIcon: {fileID: -1671905847, guid: 54a633559eb6fa14aa1455ce13f1ca78, type: 3}
   effectDescription: Gain 2 attack
   effectDuration: 2
   effectType: 0

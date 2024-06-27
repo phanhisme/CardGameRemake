@@ -8,6 +8,8 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
     public BasePlayer playerScript;
     public EffectDuration effectScript;
 
+    public AudioSource cardDropSound;
+
     private void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -24,6 +26,8 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
         CardData data = thisCard.cardData;
         Card card = thisCard.card;
 
+        int effectAmount = data.effectAmount;
+
         //Debug.Log("OnDrop");
         if (eventData.pointerDrag != null && playerScript.energy >= data.stamCost)
         {
@@ -31,30 +35,79 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //if the card is of attack type and is hitting the enmy
             if (gameObject.tag == "Enemy")
             {
-                Debug.Log("touch");
                 //find enemy behaviour within the dropped target
                 EnemyBehaviour enemyScript = GetComponent<EnemyBehaviour>();
 
                 //only attack cards
                 if (data.cardTarget == CardData.CardTarget.Enemy)
                 {
-                    bool strengthActive = effectScript.appliedStatus.Contains(effectScript.allStatus[0]);
+                    bool strengthActive = effectScript.appliedStatus.Contains(effectScript.checkEffect("S02"));
                     if (strengthActive)
                     {
-                        data.effectAmount += 2;
+                        effectAmount += 2;
                     }
+
+                    if (data.cardType == CardData.CardType.Attack)
+                    {
+                        playerScript.RealmPower();
+
+                        bool thornActive = effectScript.appliedStatus.Contains(effectScript.checkEffect("S13"));
+                        if (thornActive)
+                        {
+                            effectAmount /= 2;
+                        }
+
+                        bool blindActive = effectScript.appliedStatus.Contains(effectScript.checkEffect("S12"));
+                        if (blindActive)
+                        {
+                            Debug.Log("have blind");
+                            float randomBlindChance = Random.value;
+                            if (randomBlindChance < 1)
+                            {
+
+                                //if the effect carry out -> turn decrease
+                                gameManager.selectedCard = null;
+
+                                //destroy card and effect pooof!
+                                //Instantiate(testPrefab, eventData.pointerDrag.transform.parent);
+                                Destroy(eventData.pointerDrag.gameObject);
+
+                                //discard cards
+                                gameManager.discardedDeck.Add(card);
+                                gameManager.playerDeck.Remove(card);
+
+                                //cards needs to find their new locations since the first card is destroyed
+                                //thus, they spread differently
+                                OnDeckBehaviour[] cardsLeft = FindObjectsOfType<OnDeckBehaviour>();
+
+                                foreach (OnDeckBehaviour onDeck in cardsLeft)
+                                {
+                                    //resetting position of the remaining cards
+                                    onDeck.SetPosition();
+                                }
+
+                                //minus energy based on the stam cost
+                                playerScript.energy -= data.stamCost;
+
+                                return;
+                            }
+                        }
+
+                        playerScript.anim.SetTrigger("isAttacking");
+
+                    }  
 
                     //effect of the card on the enemy
                     switch (data.ID)
                     {
                         case 02: //Deal 4 damage to a single enemy
-                            enemyScript.TakeDamage(data.effectAmount);
+                            enemyScript.TakeDamage(effectAmount);
                             break;
 
                         case 07: //If there is 1 enemy, deal 24 damage. If more than 1, deal 12 each
                             if (gameManager.enemyInStage.Count <= 1)
                             {
-                                enemyScript.TakeDamage(data.effectAmount * 2); //24 damage
+                                enemyScript.TakeDamage(effectAmount * 2); //24 damage
                             }
 
                             else if (gameManager.enemyInStage.Count > 1)
@@ -63,7 +116,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                                 foreach (GameObject entity in enemy)
                                 {
                                     EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
-                                    target.TakeDamage(data.effectAmount); //12 damage
+                                    target.TakeDamage(effectAmount); //12 damage
                                 }
                             }
                             break;
@@ -74,11 +127,11 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             //remember to remove the applied effects on the enemies!
                             if (enlessDream)
                             {
-                                enemyScript.TakeDamage(data.effectAmount * 2);
+                                enemyScript.TakeDamage(effectAmount * 2);
                                 playerScript.energy += 1;
                             }
                             else
-                                enemyScript.TakeDamage(data.effectAmount);
+                                enemyScript.TakeDamage(effectAmount);
                             break;
 
                         case 15: //Deal 6 Damage to all enemies. Heals Health equal to the unblocked damage dealt with this attack
@@ -91,7 +144,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                                 int currentHealth = target.health;
 
                                 //take damage
-                                target.TakeDamage(data.effectAmount); //6 damage
+                                target.TakeDamage(effectAmount); //6 damage
 
                                 //if the enemy lose health
                                 if (target.health < currentHealth)
@@ -103,21 +156,23 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             }
                             break;
 
-                        case 18: //Deal 4 damage to all enemies and gain 4 extra Skill cards. These cards deal 4 single damage and exhaust after use
-                            GameObject[] bEnemy = GameObject.FindGameObjectsWithTag("Enemy");
-                            foreach (GameObject entity in bEnemy)
-                            {
-                                EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
-                                //take damage
-                                target.TakeDamage(data.effectAmount); //4 damage
-                                                                      //gain 4 cards (we do not have this card yet)
-                                                                      //also change the card front to be other than "Main_Dream"
-                            }
-                            break;
+                            //THE SKILLS FOLLOWINGS ARE NOT POLISHED YET FOR THE BUILD, THUS, WUILL BE REMOVED
 
-                        case 19: //Sleep a single enemy for 2 turn. Only wake up if attacked by the player or end of Sleep
-                            enemyScript.appliedStatus.Add(effectScript.checkEffect("S06"));
-                            break;
+                        //case 18: //Deal 4 damage to all enemies and gain 4 extra Skill cards. These cards deal 4 single damage and exhaust after use
+                        //    GameObject[] bEnemy = GameObject.FindGameObjectsWithTag("Enemy");
+                        //    foreach (GameObject entity in bEnemy)
+                        //    {
+                        //        EnemyBehaviour target = entity.GetComponent<EnemyBehaviour>();
+                        //        //take damage
+                        //        target.TakeDamage(data.effectAmount); //4 damage
+                        //                                              //gain 4 cards (we do not have this card yet)
+                        //                                              //also change the card front to be other than "Main_Dream"
+                        //    }
+                        //    break;
+
+                        //case 19: //Sleep a single enemy for 2 turn. Only wake up if attacked by the player or end of Sleep
+                        //    enemyScript.appliedStatus.Add(effectScript.checkEffect("S06"));
+                        //    break;
 
                         default:
                             Debug.Log("There is no Attack cards with this ID: " + data.ID);
@@ -138,6 +193,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                     Status strength = effectScript.checkEffect("S02");
                     Status moonlight = effectScript.checkEffect("S04");
                     Status lullaby = effectScript.checkEffect("S05");
+                    Status mornach = effectScript.checkEffect("S08");
                     Status eclipse = effectScript.checkEffect("S09");
                     Status remainBlock = effectScript.checkEffect("S10");
 
@@ -146,11 +202,11 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                     {
                         if (data.cardType == CardData.CardType.Defense)
                         {
-                            data.effectAmount = data.effectAmount / 2;
+                            effectAmount /= 2;
                         }
                         else if (data.cardType == CardData.CardType.Attack)
                         {
-                            data.effectAmount = data.effectAmount * 2;
+                            effectAmount *= 2;
                         }
                     }
 
@@ -164,7 +220,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             //get lullaby effect
                             if (data.cardType == CardData.CardType.Defense)
                             {
-                                data.effectAmount += lullabyValue;
+                                effectAmount += lullabyValue;
                                 lullabyValue = 0;
                                 Debug.Log(lullabyValue);
                             }
@@ -176,11 +232,11 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                         //DEFENSE
 
                         case 03: //Gain 5 Blocks
-                            playerScript.AddBlock(data.effectAmount);
+                            playerScript.AddBlock(effectAmount);
                             break;
 
                         case 04: //Gain 8 Blocks and draw a card
-                            playerScript.AddBlock(data.effectAmount);
+                            playerScript.AddBlock(effectAmount);
                             gameManager.ShuffleDeck(1); //draw a card
                             break;
 
@@ -188,7 +244,6 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                                  //All Blocks recieved this turn will not be removed at the star of next turn
 
                             int defenseCards = gameManager.GetDefenseCard();
-                            
 
                             if (effectScript.ReturnCard(remainBlock))
                             {
@@ -208,7 +263,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                             break;
 
                         case 11: //Gain 6 and Moonlight effect for 2 turn
-                            playerScript.AddBlock(data.effectAmount);
+                            playerScript.AddBlock(effectAmount);
 
                             //this is very hard coded YES
                             
@@ -255,7 +310,18 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
 
                         case 20://From a cocoon to Butterfly, if the player is defeated, they will restore 10 Health and return to the battle.
                                 //Recieve "Mark of Rebirth" (until reborn)
-                            effectScript.UpdateEffectUI(effectScript.allStatus[6]);
+
+                            if (effectScript.ReturnCard(mornach))
+                            {
+                                Debug.Log("This effect is already active and cannot stack, returning card");
+                                return;
+                            }
+                            else
+                            {
+                                gameManager.markOfRebirth.SetActive(true);
+                                effectScript.appliedStatus.Add(effectScript.checkEffect("S08"));
+                            }
+
                             break;
 
                         default:
@@ -269,10 +335,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
                 }
             }
 
-            if (data.cardType == CardData.CardType.Attack)
-            {
-                playerScript.RealmPower();
-            }
+            cardDropSound.Play();
 
             //if the effect carry out -> turn decrease
             gameManager.selectedCard = null;
@@ -284,6 +347,7 @@ public class HitBoxSlot : MonoBehaviour, IDropHandler
             //discard cards
             gameManager.discardedDeck.Add(card);
             gameManager.playerDeck.Remove(card);
+            gameManager.CheckCardOnHand();
 
             //cards needs to find their new locations since the first card is destroyed
             //thus, they spread differently

@@ -32,8 +32,6 @@ public class EffectDuration : MonoBehaviour
                             Debug.Log("Error, cannot find this status");
                             break;
                     }
-
-                    
                 }
             }
 
@@ -60,14 +58,19 @@ public class EffectDuration : MonoBehaviour
         foreach(Transform child in effectUIHolder.transform)
         {
             StatusUI ui = child.GetComponent<StatusUI>();
-            ui.currentDuration -= 1;
+
+            if(ui.chosenStatus.statusID == "S08")
+            {
+                return;
+            }
+
+            ui.currentDuration -= 1; //remove one turn for every active effect
             ui.turnLeft.text = ui.currentDuration.ToString();
 
-            if (ui.currentDuration == 0)
+            if (ui.currentDuration == 0) //remove at 0 turn
             {
-                if (ui.chosenStatus.statusID == "S05")
+                if (ui.chosenStatus.statusID == "S05") //since overheal heals the player back at the rnd of the effect, call here to heal
                 {
-                    
                     playerScript.HealUp(playerScript.OverhealValue());
                     Debug.Log("Heal at the end of turn with" + playerScript.OverhealValue());
                 }
@@ -96,7 +99,7 @@ public class EffectDuration : MonoBehaviour
 
     public bool ReBirth()
     {
-        if (appliedStatus.Contains(allStatus[6]))
+        if (appliedStatus.Contains(checkEffect("S08")))
         {
             return true;
         }

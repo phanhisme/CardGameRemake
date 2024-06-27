@@ -13,10 +13,13 @@ MonoBehaviour:
   m_Name: 04_MoonCryData
   m_EditorClassIdentifier: 
   ID: 4
-  icon: {fileID: 21300000, guid: 74054e9276182c643806481a3f5f269c, type: 3}
+  icon: {fileID: 76507576, guid: 54a633559eb6fa14aa1455ce13f1ca78, type: 3}
   cardFront: {fileID: 365135945, guid: 5d1f75c556b76614aa4757273326fecb, type: 3}
   cardName: Moon Cry
   stamCost: 1
   effectAmount: 8
+  duration: 0
   cardDes: Gain 8 <color=blue>Blocks</color> and draw a card
   cardType: 1
+  cardTarget: 0
+  damageType: 0
